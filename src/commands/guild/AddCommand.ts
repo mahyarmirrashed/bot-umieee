@@ -24,32 +24,43 @@ export const run: RunFunction = async (
 		message.channel.name === 'bots'
 	) {
 		const [discordID, ieeeID] = args;
+		const memberID: RegExpMatchArray | null = discordID.match(DIGIT_PATTERN);
 
-		if (discordID.match(DIGIT_PATTERN)) {
-			const member: GuildMember = message.guild.member(
-				discordID.match(DIGIT_PATTERN)[0]
-			);
+		if (memberID) {
+			if (message.guild) {
+				const member: GuildMember = message.guild.member(
+					memberID[0]
+				) as GuildMember;
 
-			if (member) {
-				if (ieeeID.length == IEEE_NUMBER_LENGTH && DIGIT_PATTERN.test(ieeeID)) {
-					// add member to database for validation
-					addMembership(client, message, member.user.id, ieeeID);
-					// update user role
-					modifyRole(client, member, message.guild.roles, ieeeID);
+				if (member) {
+					if (
+						ieeeID.length == IEEE_NUMBER_LENGTH &&
+						DIGIT_PATTERN.test(ieeeID)
+					) {
+						// add member to database for validation
+						addMembership(client, message, member.user.id, ieeeID);
+						// update user role
+						modifyRole(client, member, message.guild.roles, ieeeID);
+					} else {
+						client.sendReplyEmbed(message, {
+							description: [
+								'**Error:** Invalid IEEE membership number format.',
+								usage(client),
+							].join('\n'),
+						});
+					}
 				} else {
 					client.sendReplyEmbed(message, {
 						description: [
-							'**Error:** Invalid IEEE membership number format.',
+							`**Error:** Could not find member with DiscordID, ${discordID}, on server.`,
 							usage(client),
 						].join('\n'),
 					});
 				}
 			} else {
 				client.sendReplyEmbed(message, {
-					description: [
-						`**Error:** Could not find member with DiscordID, ${discordID}, on server.`,
-						usage(client),
-					].join('\n'),
+					description:
+						'**Error:** `message.guild` was `null` for some reason...',
 				});
 			}
 		} else {
