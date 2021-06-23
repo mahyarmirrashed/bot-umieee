@@ -6,7 +6,6 @@ This is a bot created using TypeScript and Discord.js for the University of Mani
 
 - [ ] Look into setting up Heroku branch with basic commands
 - [ ] Create proper `Procfile`
-- [ ] Complete `AddCommand.ts`
 - [ ] Complete COTW features
   - [ ] `CreateVote.ts`
   - [ ] `DismantleVote.ts`
