@@ -47,7 +47,7 @@ export const run: RunFunction = async (
 			} else {
 				client.sendReplyEmbed(message, {
 					description: [
-						`**Error:** Could not find member IE, ${discordID}, on server.`,
+						`**Error:** Could not find member with DiscordID, ${discordID}, on server.`,
 						usage(client),
 					].join('\n'),
 				});
