@@ -15,7 +15,7 @@ export const run: RunFunction = async (
 	client: Bot,
 	message: Message,
 	args: string[]
-) => {
+): Promise<void> => {
 	let amount: number = DEFAULT_AMOUNT;
 	let [limit] = args;
 

@@ -3,7 +3,10 @@ import { Message } from 'discord.js';
 import Bot from '../../client/Client';
 import Command from '../../interfaces/CommandStorage';
 
-export const run: RunFunction = async (client: Bot, message: Message) => {
+export const run: RunFunction = async (
+	client: Bot,
+	message: Message
+): Promise<void> => {
 	if (
 		!message.author.bot &&
 		message.guild &&
