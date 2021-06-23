@@ -5,11 +5,6 @@ This is a bot created using TypeScript and Discord.js for the University of Mani
 ## Tasks
 
 - [ ] Look into setting up Heroku branch with basic commands
-  - [ ] Only publish `dist/` subtree along with basic items?
-- [ ] Look into [Heroku Postgres](https://devcenter.heroku.com/articles/heroku-postgresql#connecting-in-node-js) for free data persistence
-  - [ ] Does it work with local version?
-  - [ ] Does it work when pushing working local version to repository branch?
-- [ ] Look into [MongoDB cluster](https://www.youtube.com/watch?v=ET8kwosC9fw)
 - [ ] Create proper `Procfile`
 - [ ] Complete `AddCommand.ts`
 - [ ] Complete COTW features
