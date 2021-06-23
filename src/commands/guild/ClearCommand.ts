@@ -49,7 +49,7 @@ export const run: RunFunction = async (
 	}
 };
 
-export const usage: UsageFunction = (client: Bot) => {
+export const usage: UsageFunction = (client: Bot): string => {
 	return `**Usage:** \`${client.prefix}clear (amount)\``;
 };
 
