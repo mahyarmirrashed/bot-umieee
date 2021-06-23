@@ -50,7 +50,7 @@ export const run: RunFunction = async (
 };
 
 export const usage: UsageFunction = (client: Bot) => {
-	return `**Usage:** \`${client.config.prefix}clear (amount)\``;
+	return `**Usage:** \`${client.prefix}clear (amount)\``;
 };
 
 export const maximumArguments: number = 1;

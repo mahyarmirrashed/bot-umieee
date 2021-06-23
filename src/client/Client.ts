@@ -17,12 +17,14 @@ import Event from '../interfaces/EventStorage';
 const globPromise = promisify(glob);
 
 export default class Bot extends Client {
-	public readonly logger: Consola = consola;
-	public config: Config;
+    // readonly members
 	public readonly commands: Collection<string, Command> = new Collection();
 	public readonly events: Collection<string, Event> = new Collection();
+	public readonly logger: Consola = consola;
+    public readonly prefix: string;
 
-	public constructor() {
+	public constructor(config: Config) {
+        // setup client connection options
 		super({
 			ws: {
 				intents: [
@@ -38,12 +40,15 @@ export default class Bot extends Client {
 			messageEditHistoryMaxSize: 200,
 			messageSweepInterval: 180,
 		});
+
+        // setup static readonly members
+        this.prefix = config.prefix;
+
+        // log into client
+		super.login(config.token).catch((e: any) => this.logger.error(e));
 	}
 
-	public start(config: Config): void {
-		this.config = config;
-		super.login(config.token).catch((e: any) => this.logger.error(e));
-
+	public start(): void {
 		// set up commands
 		globPromise(`${__dirname}/../commands/**/*{.ts,.js}`)
 			.then((commandFiles: string[]) => {

@@ -22,7 +22,7 @@ export const run: RunFunction = async (client: Bot, message: Message) => {
 };
 
 export const usage: UsageFunction = (client: Bot) => {
-	return `**Usage:** \`${client.config.prefix}ping\``;
+	return `**Usage:** \`${client.prefix}ping\``;
 };
 
 export const maximumArguments: number = 0;

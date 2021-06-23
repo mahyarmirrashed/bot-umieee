@@ -7,12 +7,12 @@ export const run: RunFunction = async (client: Bot, message: Message) => {
 	if (
 		!message.author.bot &&
 		message.guild &&
-		message.content.toLowerCase().startsWith(client.config.prefix)
+		message.content.toLowerCase().startsWith(client.prefix)
 	) {
 		// extract command and optional arguments from message
 		const [cmd, ...args] = message.content
 			.trim()
-			.substring(client.config.prefix.length)
+			.substring(client.prefix.length)
 			.split(/\s+/);
 
 		// search client for command and run if found
