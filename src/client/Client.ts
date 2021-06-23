@@ -47,6 +47,8 @@ export default class Bot extends Client {
 
 		// log into database
 		connect(config.uri, {
+			useCreateIndex: true,
+			useFindAndModify: false,
 			useNewUrlParser: true,
 			useUnifiedTopology: true,
 		})
