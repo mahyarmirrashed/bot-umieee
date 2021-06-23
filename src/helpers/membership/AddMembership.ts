@@ -1,5 +1,6 @@
 import { Message, Snowflake } from 'discord.js';
 import Bot from '../../client/Client';
+import Membership from '../../interfaces/MembershipStorage';
 import MembershipStorage from '../../interfaces/MembershipStorage';
 import MembershipModel from '../../models/MembershipModel';
 
@@ -13,7 +14,7 @@ const addMembership = async (
 	const res: MembershipStorage = await MembershipModel.findOne({
 		ieeeID: ieeeID,
 		discordID: { $ne: discordID },
-	}).exec();
+	}).exec() as Membership;
 
 	if (res) {
 		// indicate which user already has the targeted ieeeID
