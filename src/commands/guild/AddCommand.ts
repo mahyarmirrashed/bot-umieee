@@ -6,8 +6,8 @@ import {
 	Permissions,
 } from 'discord.js';
 import Bot from '../../client/Client';
-import addMembership from '../../helpers/AddMembershipHelper';
-import modifyRole from '../../helpers/ModifyRoleHelper';
+import addMembership from '../../helpers/membership/AddMembership';
+import modifyRole from '../../helpers/membership/ModifyRole';
 import RunFunction from '../../interfaces/RunFunctionStorage';
 import UsageFunction from '../../interfaces/UsageFunctionStorage';
 

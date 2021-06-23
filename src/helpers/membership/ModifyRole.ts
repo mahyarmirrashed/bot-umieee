@@ -1,6 +1,6 @@
-import validateMembership from './ValidateMembershipHelper';
+import validateMembership from './ValidateMembership';
 import { GuildMember, Role, RoleManager } from 'discord.js';
-import Bot from '../client/Client';
+import Bot from '../../client/Client';
 
 const modifyRole = async (
 	client: Bot,
