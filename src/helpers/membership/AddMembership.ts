@@ -1,7 +1,7 @@
 import { Message } from 'discord.js';
-import Bot from '../../../client/Client';
-import MembershipStorage from '../../../interfaces/MembershipStorage';
-import MembershipModel from '../../../models/MembershipModel';
+import Bot from '../../client/Client';
+import MembershipStorage from '../../interfaces/MembershipStorage';
+import MembershipModel from '../../models/MembershipModel';
 
 const addMembership = async (
 	client: Bot,
