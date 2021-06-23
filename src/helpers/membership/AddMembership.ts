@@ -1,4 +1,4 @@
-import { Message } from 'discord.js';
+import { Message, Snowflake } from 'discord.js';
 import Bot from '../../client/Client';
 import MembershipStorage from '../../interfaces/MembershipStorage';
 import MembershipModel from '../../models/MembershipModel';
@@ -6,7 +6,7 @@ import MembershipModel from '../../models/MembershipModel';
 const addMembership = async (
 	client: Bot,
 	message: Message,
-	discordID: string,
+	discordID: Snowflake,
 	ieeeID: string
 ): Promise<void> => {
 	// check if other users exist with same ieeeID but different discordID
