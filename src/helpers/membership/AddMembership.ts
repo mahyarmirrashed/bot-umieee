@@ -1,7 +1,6 @@
 import { Message, Snowflake } from 'discord.js';
 import Bot from '../../client/Client';
 import Membership from '../../interfaces/MembershipStorage';
-import MembershipStorage from '../../interfaces/MembershipStorage';
 import MembershipModel from '../../models/MembershipModel';
 
 const addMembership = async (
@@ -11,10 +10,10 @@ const addMembership = async (
 	ieeeID: string
 ): Promise<void> => {
 	// check if other users exist with same ieeeID but different discordID
-	const res: MembershipStorage = await MembershipModel.findOne({
+	const res: Membership = (await MembershipModel.findOne({
 		ieeeID: ieeeID,
 		discordID: { $ne: discordID },
-	}).exec() as Membership;
+	}).exec()) as Membership;
 
 	if (res) {
 		// indicate which user already has the targeted ieeeID
@@ -22,7 +21,7 @@ const addMembership = async (
 			description: `<@${res.discordID}> is already assigned the IEEE ID, ${ieeeID}!`,
 		});
 	} else {
-		MembershipModel.findOneAndUpdate(
+		MembershipModel.updateOne(
 			{ discordID: discordID },
 			{ discordID: discordID, ieeeID: ieeeID },
 			{ upsert: true },
@@ -38,7 +37,7 @@ const addMembership = async (
 						},
 						'GREEN'
 					);
-					// log database insertion
+					// log database upsertion
 					client.logger.success('Successfully upserted new member:');
 					client.logger.info(`discordID: ${discordID}`);
 					client.logger.info(`ieeeID: ${ieeeID}`);
