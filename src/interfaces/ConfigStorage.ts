@@ -2,4 +2,5 @@
 export default interface Config {
     readonly prefix: string;
 	token: string;
+    uri: string;
 }
