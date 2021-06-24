@@ -6,6 +6,7 @@
 		"target": "ESNext",
 		"outDir": "dist",
 		"types": ["node"],
+        "strict": true,
 		"sourceMap": true,
 		"esModuleInterop": true,
 		"experimentalDecorators": true,
