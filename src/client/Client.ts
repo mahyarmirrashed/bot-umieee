@@ -2,17 +2,19 @@ import consola, { Consola } from 'consola';
 import {
 	Client,
 	Collection,
+	Guild,
 	Intents,
 	Message,
 	MessageEmbed,
 	MessageEmbedOptions,
+	NewsChannel,
+	TextChannel,
 } from 'discord.js';
 import glob from 'glob';
 import { connect, connection as db } from 'mongoose';
 import { promisify } from 'util';
 
 import Command from '../interfaces/CommandStorage';
-import Config from '../interfaces/ConfigStorage';
 import Event from '../interfaces/EventStorage';
 
 const globPromise = promisify(glob);
@@ -23,8 +25,10 @@ export default class Bot extends Client {
 	public readonly events: Collection<string, Event> = new Collection();
 	public readonly logger: Consola = consola;
 	public readonly prefix: string;
+	// modifiable members
+	public guild!: Guild | undefined;
 
-	public constructor(config: Config) {
+	public constructor() {
 		// setup client connection options
 		super({
 			ws: {
@@ -43,10 +47,12 @@ export default class Bot extends Client {
 		});
 
 		// log into client
-		super.login(config.token).catch((e: any) => this.logger.error(e));
+		super
+			.login(process.env.TOKEN as string)
+			.catch((e: any) => this.logger.error(e));
 
 		// log into database
-		connect(config.uri, {
+		connect(process.env.URI as string, {
 			useCreateIndex: true,
 			useFindAndModify: false,
 			useNewUrlParser: true,
@@ -58,7 +64,7 @@ export default class Bot extends Client {
 			.catch((e: any) => this.logger.error(e));
 
 		// setup static readonly members
-		this.prefix = config.prefix;
+		this.prefix = process.env.PREFIX as string;
 	}
 
 	public start(): void {
@@ -87,14 +93,24 @@ export default class Bot extends Client {
 			.catch((e: any) => this.logger.error(e));
 	}
 
+	public async sendEmbed(
+		channel: TextChannel | NewsChannel,
+		options: MessageEmbedOptions,
+		color = 'BLUE'
+	): Promise<void | Message> {
+		this.logger.info(options.description);
+		return channel
+			.send(new MessageEmbed({ ...options, color: color }))
+			.catch((e: any) => this.logger.error(e));
+	}
+
 	public async sendReplyEmbed(
 		message: Message,
 		options: MessageEmbedOptions,
 		color = 'RED'
-	): Promise<void> {
-		message.channel
+	): Promise<void | Message> {
+		return message.channel
 			.send(new MessageEmbed({ ...options, color: color }))
 			.catch((e: any) => this.logger.error(e));
-		return new Promise<void>(() => Promise.resolve(null));
 	}
 }

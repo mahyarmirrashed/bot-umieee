@@ -1,5 +1,7 @@
+import { config } from 'dotenv';
 import Bot from './client/Client';
-import Config from './interfaces/ConfigStorage';
-import * as File from '../config.json';
 
-new Bot(File as Config).start();
+// set up environment variables from .env file
+config();
+
+new Bot().start();

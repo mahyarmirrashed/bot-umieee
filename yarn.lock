@@ -596,6 +596,11 @@ diff@^4.0.1:
   resolved "https://registry.npmjs.org/diff/-/diff-4.0.2.tgz"
   integrity sha512-58lmxKSA4BNyLz+HHMUzlOEpg09FV+ev6ZMe3vJihgdxzgcwZ8VoEEPmALCZG9LmqfVoNMMKpttIYTVG6uDY7A==
 
+discord-emoji@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/discord-emoji/-/discord-emoji-2.0.1.tgz#7982c2502995cb424f1062f4b174a988ac077133"
+  integrity sha512-01lVzneYSom5HgQbx0LINmAGmLAPSKIKEzTBxQwV269u+5WWmCa+Pw88pJsttaaUlbQhD4f48junPGBNFr1wmg==
+
 discord.js@^12.5.3:
   version "12.5.3"
   resolved "https://registry.npmjs.org/discord.js/-/discord.js-12.5.3.tgz"
@@ -616,6 +621,11 @@ dot-prop@^5.1.0:
   integrity sha512-QM8q3zDe58hqUqjraQOmzZ1LIH9SWQJTlEKCH4kJ2oQvLZk7RbQXvtDM2XEq3fwkV9CCvvH4LA0AV+ogFsBM2Q==
   dependencies:
     is-obj "^2.0.0"
+
+dotenv@^10.0.0:
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-10.0.0.tgz#3d4227b8fb95f81096cdd2b66653fb2c7085ba81"
+  integrity sha512-rlBi9d8jpv9Sf1klPjNfFAuWDjKLwTIJJ/VxtoTwIR6hnZxcEOQCZg2oIL3MWBYw5GpUDKOEnND7LXTbIpQ03Q==
 
 dynamic-dedupe@^0.3.0:
   version "0.3.0"
