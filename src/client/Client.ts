@@ -48,11 +48,11 @@ export default class Bot extends Client {
 
 		// log into client
 		super
-			.login(process.env.TOKEN as string)
+			.login(process.env.DISCORD_BOT_TOKEN as string)
 			.catch((e: any) => this.logger.error(e));
 
 		// log into database
-		connect(process.env.URI as string, {
+		connect(process.env.DATABASE_URI as string, {
 			useCreateIndex: true,
 			useFindAndModify: false,
 			useNewUrlParser: true,
