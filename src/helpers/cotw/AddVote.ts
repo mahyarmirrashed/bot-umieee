@@ -62,7 +62,7 @@ const addVote = async (client: Bot): Promise<void> => {
 						if (e) {
 							client.logger.error(e);
 						} else {
-							// log database date
+							// log database update
 							client.logger.success('Successfully updated nomination:');
 							client.logger.info(`message: ${message.id}`);
 						}
