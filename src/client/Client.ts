@@ -98,7 +98,6 @@ export default class Bot extends Client {
 		options: MessageEmbedOptions,
 		color = 'BLUE'
 	): Promise<void | Message> {
-		this.logger.info(options.description);
 		return channel
 			.send(new MessageEmbed({ ...options, color: color }))
 			.catch((e: any) => this.logger.error(e));
