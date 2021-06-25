@@ -11,6 +11,7 @@ const NominationSchema: Schema = new Schema(
 				reason: { type: String, required: true },
 			},
 		],
+		message: { type: String, unique: true },
 	},
 	{
 		collection: 'nominations',
