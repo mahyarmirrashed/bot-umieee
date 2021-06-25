@@ -10,12 +10,12 @@ const modifyRole = async (
 ): Promise<void> => {
 	const active: Role = roles.cache.find(
 		(role: Role) => role.name.toLowerCase() === 'active'
-	);
+	) as Role;
 	const inactive: Role = roles.cache.find(
 		(role: Role) => role.name.toLowerCase() === 'inactive'
-	);
+	) as Role;
 
-	if (await validateMembership(ieeeID)) {
+	if (validateMembership(ieeeID)) {
 		member.roles
 			.add(active)
 			.then((member: GuildMember) => member.roles.remove(inactive))
