@@ -1,5 +1,5 @@
 import { model, Schema } from 'mongoose';
-import Chump from '../interfaces/ChumpStorage';
+import Chump from '../types/ChumpType';
 
 const ChumpSchema: Schema = new Schema(
 	{

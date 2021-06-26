@@ -7,9 +7,9 @@ import {
 } from 'discord.js';
 import moment from 'moment';
 import Bot from '../../client/Client';
-import Nomination from '../../interfaces/NominationStorage';
 import ChumpModel from '../../models/ChumpModel';
 import NominationModel from '../../models/NominationModel';
+import Nomination from '../../types/NominationType';
 
 const emojis = _;
 const JAPANESE_FOOD_IDX: number = 70;

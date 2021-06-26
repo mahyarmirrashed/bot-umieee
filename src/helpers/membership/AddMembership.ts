@@ -1,7 +1,7 @@
 import { Message, Snowflake } from 'discord.js';
 import Bot from '../../client/Client';
-import Membership from '../../interfaces/MembershipStorage';
 import MembershipModel from '../../models/MembershipModel';
+import Membership from '../../types/MembershipType';
 
 const addMembership = async (
 	client: Bot,

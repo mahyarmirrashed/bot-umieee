@@ -1,5 +1,5 @@
 import { model, Schema } from 'mongoose';
-import Nomination from '../interfaces/NominationStorage';
+import Nomination from '../types/NominationType';
 
 const NominationSchema: Schema = new Schema(
 	{

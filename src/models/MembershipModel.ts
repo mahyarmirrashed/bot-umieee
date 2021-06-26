@@ -1,5 +1,5 @@
 import { model, Schema } from 'mongoose';
-import Membership from '../interfaces/MembershipStorage';
+import Membership from '../types/MembershipType';
 
 const MembershipSchema: Schema = new Schema(
 	{

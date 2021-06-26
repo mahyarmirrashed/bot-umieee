@@ -1,6 +1,8 @@
 import { Snowflake } from 'discord.js';
 
-export default interface Membership {
+type Membership = {
 	discordID: Snowflake;
 	ieeeID: string;
-}
+};
+
+export default Membership;

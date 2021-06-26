@@ -1,8 +1,8 @@
 import { Message, Snowflake } from 'discord.js';
 import Bot from '../../client/Client';
-import Nomination from '../../interfaces/NominationStorage';
 import NominationModel from '../../models/NominationModel';
 import moment from 'moment';
+import Nomination from '../../types/NominationType';
 
 const MAXIMUM_NOMINATIONS: number = 20;
 
