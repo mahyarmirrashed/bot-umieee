@@ -1,6 +1,5 @@
 import { PermissionResolvable } from 'discord.js';
 import RunFunction from './RunFunctionStorage';
-import UsageFunction from './UsageFunctionStorage';
 
 export default interface Command {
 	maximumArguments: number;
@@ -8,5 +7,5 @@ export default interface Command {
 	name: string;
 	permissions: PermissionResolvable[];
 	run: RunFunction;
-	usage: UsageFunction;
+    usage: string;
 }
