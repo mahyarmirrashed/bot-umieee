@@ -11,7 +11,7 @@ import {
 	TextChannel,
 } from 'discord.js';
 import glob from 'glob';
-import { connect, connection as db } from 'mongoose';
+import { connect } from 'mongoose';
 import { promisify } from 'util';
 
 import Command from '../interfaces/CommandStorage';
