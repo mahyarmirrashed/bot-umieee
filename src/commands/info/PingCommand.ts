@@ -1,7 +1,6 @@
 import { Message, Permissions } from 'discord.js';
 import Bot from '../../client/Client';
 import RunFunction from '../../interfaces/RunFunctionStorage';
-import UsageFunction from '../../interfaces/UsageFunctionStorage';
 
 export const run: RunFunction = async (
 	client: Bot,
@@ -24,9 +23,9 @@ export const run: RunFunction = async (
 	});
 };
 
-export const usage: UsageFunction = (client: Bot): string => {
-	return `**Usage:** \`${client.prefix}ping\``;
-};
+export const usage: string = `**Usage:** \`${
+	process.env.PREFIX as string
+}ping\``;
 
 export const maximumArguments: number = 0;
 export const minimumArguments: number = 0;

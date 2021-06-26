@@ -10,12 +10,12 @@ export const run: RunFunction = async (
 	if (
 		!message.author.bot &&
 		message.guild &&
-		message.content.toLowerCase().startsWith(client.prefix)
+		message.content.toLowerCase().startsWith(process.env.PREFIX as string)
 	) {
 		// extract command and optional arguments from message
 		const [cmd, ...args] = message.content
 			.trim()
-			.substring(client.prefix.length)
+			.substring((process.env.PREFIX as string).length)
 			.split(/\s+/);
 
 		// search client for command and run if found
@@ -51,7 +51,7 @@ export const run: RunFunction = async (
 					});
 				}
 			} else {
-				client.sendReplyEmbed(message, { description: command.usage(client) });
+				client.sendReplyEmbed(message, { description: command.usage });
 			}
 		}
 	}

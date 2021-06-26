@@ -9,7 +9,6 @@ import Bot from '../../client/Client';
 import addMembership from '../../helpers/membership/AddMembership';
 import modifyRole from '../../helpers/membership/ModifyRole';
 import RunFunction from '../../interfaces/RunFunctionStorage';
-import UsageFunction from '../../interfaces/UsageFunctionStorage';
 
 const IEEE_NUMBER_LENGTH: number = 9;
 const DIGIT_PATTERN: RegExp = RegExp('\\d+', 'g');
@@ -45,7 +44,7 @@ export const run: RunFunction = async (
 						client.sendReplyEmbed(message, {
 							description: [
 								'**Error:** Invalid IEEE membership number format.',
-								usage(client),
+								usage,
 							].join('\n'),
 						});
 					}
@@ -53,7 +52,7 @@ export const run: RunFunction = async (
 					client.sendReplyEmbed(message, {
 						description: [
 							`**Error:** Could not find member with DiscordID, ${discordID}, on server.`,
-							usage(client),
+							usage,
 						].join('\n'),
 					});
 				}
@@ -67,7 +66,7 @@ export const run: RunFunction = async (
 			client.sendReplyEmbed(message, {
 				description: [
 					'**Error:** Did not find member ID in command.',
-					usage(client),
+					usage,
 				].join('\n'),
 			});
 		}
@@ -78,9 +77,9 @@ export const run: RunFunction = async (
 	}
 };
 
-export const usage: UsageFunction = (client: Bot): string => {
-	return `**Usage:** \`${client.prefix}add <@user> [ieeeID]\``;
-};
+export const usage: string = `**Usage:** \`${
+	process.env.PREFIX as string
+}add <@user> [ieeeID]\``;
 
 export const maximumArguments: number = 2;
 export const minimumArguments: number = 2;

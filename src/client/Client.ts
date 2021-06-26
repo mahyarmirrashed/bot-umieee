@@ -24,7 +24,6 @@ export default class Bot extends Client {
 	public readonly commands: Collection<string, Command> = new Collection();
 	public readonly events: Collection<string, Event> = new Collection();
 	public readonly logger: Consola = consola;
-	public readonly prefix: string;
 	// modifiable members
 	public guild!: Guild | undefined;
 
@@ -62,9 +61,6 @@ export default class Bot extends Client {
 				this.logger.success('UMIEEE database connection established!');
 			})
 			.catch((e: any) => this.logger.error(e));
-
-		// setup static readonly members
-		this.prefix = process.env.PREFIX as string;
 	}
 
 	public start(): void {

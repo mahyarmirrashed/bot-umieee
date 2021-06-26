@@ -7,7 +7,6 @@ import {
 import Bot from '../../client/Client';
 import addNomination from '../../helpers/cotw/AddNomination';
 import RunFunction from '../../interfaces/RunFunctionStorage';
-import UsageFunction from '../../interfaces/UsageFunctionStorage';
 
 const DIGIT_PATTERN: RegExp = RegExp('\\d+', 'g');
 const MAXIMUM_REASON_LENGTH: number = 50;
@@ -56,7 +55,7 @@ export const run: RunFunction = async (
 					client.sendReplyEmbed(message, {
 						description: [
 							`**Error:** Could not find member with DiscordID, ${discordID}, on server.`,
-							usage(client),
+							usage,
 						].join('\n'),
 					});
 				}
@@ -70,7 +69,7 @@ export const run: RunFunction = async (
 			client.sendReplyEmbed(message, {
 				description: [
 					'**Error:** Did not find member ID in command.',
-					usage(client),
+					usage,
 				].join('\n'),
 			});
 		}
@@ -81,9 +80,9 @@ export const run: RunFunction = async (
 	}
 };
 
-export const usage: UsageFunction = (client: Bot): string => {
-	return `**Usage:** \`${client.prefix}nominate <@user> [reason]\``;
-};
+export const usage: string = `**Usage:** \`${
+	process.env.PREFIX as string
+}nominate <@user> [reason]\``;
 
 export const maximumArguments: number = Number.POSITIVE_INFINITY;
 export const minimumArguments: number = 2;
