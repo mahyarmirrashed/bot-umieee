@@ -12,7 +12,7 @@ import NominationModel from '../../models/NominationModel';
 import Nomination from '../../types/NominationType';
 
 const emojis = _;
-const JAPANESE_FOOD_IDX: number = 70;
+const JAPANESE_FOOD_IDX = 70;
 
 const removeVote = async (client: Bot): Promise<void> => {
 	// get stringified date for previous, previous, previous Monday
@@ -41,7 +41,7 @@ const removeVote = async (client: Bot): Promise<void> => {
 				res.message
 			)) as Message;
 			// keep track of chumps
-			let chumps: Set<string> = new Set<string>();
+			const chumps: Set<string> = new Set<string>();
 
 			// calculate most voted reactions
 			const maximum: number = Math.max(
@@ -65,7 +65,7 @@ const removeVote = async (client: Bot): Promise<void> => {
 						{ week: week },
 						{ $addToSet: { chumps: chump } },
 						{ upsert: true },
-						(e: any) => {
+						(e: unknown) => {
 							if (e) {
 								client.logger.error(e);
 							} else {
@@ -80,7 +80,7 @@ const removeVote = async (client: Bot): Promise<void> => {
 			client.sendEmbed(channel, {
 				description: [
 					`**COTW Vote Results: [${week}]**\n\nThis week's chump is/are:`,
-                    '',
+					'',
 					Array.from(chumps)
 						.map((chump: string) => `<@${chump}>`)
 						.join('\n'),

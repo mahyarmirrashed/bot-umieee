@@ -8,4 +8,4 @@ export const run: RunFunction = async (
 	client.logger.info(info);
 };
 
-export const name: string = 'warn';
+export const name = 'warn';

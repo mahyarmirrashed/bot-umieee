@@ -29,12 +29,12 @@ export const run: RunFunction = async (
 					if (message.member.hasPermission(command.permissions)) {
 						command
 							.run(client, message, args)
-							.catch((e: any) =>
+							.catch((e: unknown) =>
 								client.sendReplyEmbed(message, {
 									description: `An error occurred: ${e}`,
 								})
 							)
-							.catch((e: any) => client.logger.error(e));
+							.catch((e: unknown) => client.logger.error(e));
 					} else {
 						client.sendReplyEmbed(
 							message,
@@ -57,4 +57,4 @@ export const run: RunFunction = async (
 	}
 };
 
-export const name: string = 'message';
+export const name = 'message';

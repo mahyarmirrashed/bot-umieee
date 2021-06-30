@@ -3,7 +3,7 @@ type Advertisement = {
 		title: string;
 		description: string;
 		link: string;
-        city: string;
+		city: string;
 	};
 };
 

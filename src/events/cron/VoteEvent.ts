@@ -4,8 +4,8 @@ import removeVote from '../../helpers/cotw/RemoveVote';
 import RunFunction from '../../interfaces/RunFunctionStorage';
 
 export const run: RunFunction = async (client: Bot): Promise<void> => {
-    removeVote(client);
-    addVote(client);
+	removeVote(client);
+	addVote(client);
 };
 
-export const name: string = 'vote';
+export const name = 'vote';

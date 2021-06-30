@@ -10,8 +10,8 @@ import addMembership from '../../helpers/membership/AddMembership';
 import modifyRole from '../../helpers/membership/ModifyRole';
 import RunFunction from '../../interfaces/RunFunctionStorage';
 
-const IEEE_NUMBER_LENGTH: number = 9;
-const DIGIT_PATTERN: RegExp = RegExp('\\d+', 'g');
+const IEEE_NUMBER_LENGTH = 9;
+const DIGIT_PATTERN = RegExp('\\d+', 'g');
 
 export const run: RunFunction = async (
 	client: Bot,
@@ -77,13 +77,13 @@ export const run: RunFunction = async (
 	}
 };
 
-export const usage: string = `**Usage:** \`${
+export const usage = `**Usage:** \`${
 	process.env.PREFIX as string
 }add <@user> [ieeeID]\``;
 
-export const maximumArguments: number = 2;
-export const minimumArguments: number = 2;
-export const name: string = 'add';
+export const maximumArguments = 2;
+export const minimumArguments = 2;
+export const name = 'add';
 export const permissions: PermissionResolvable[] = [
 	Permissions.FLAGS.MANAGE_GUILD,
 ];

@@ -4,7 +4,7 @@ import NominationModel from '../../models/NominationModel';
 import moment from 'moment';
 import Nomination from '../../types/NominationType';
 
-const MAXIMUM_NOMINATIONS: number = 20;
+const MAXIMUM_NOMINATIONS = 20;
 
 const addNomination = async (
 	client: Bot,
@@ -67,7 +67,7 @@ const addNomination = async (
 			{
 				upsert: true,
 			},
-			(e: any) => {
+			(e: unknown) => {
 				if (e) {
 					client.logger.error(e);
 				} else {

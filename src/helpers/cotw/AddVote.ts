@@ -6,7 +6,7 @@ import NominationModel from '../../models/NominationModel';
 import Nomination from '../../types/NominationType';
 
 const emojis = _;
-const JAPANESE_FOOD_IDX: number = 70;
+const JAPANESE_FOOD_IDX = 70;
 
 const addVote = async (client: Bot): Promise<void> => {
 	// get stringified date for previous, previous Monday
@@ -58,7 +58,7 @@ const addVote = async (client: Bot): Promise<void> => {
 					{ week: week },
 					{ message: message.id },
 					{},
-					(e: any) => {
+					(e: unknown) => {
 						if (e) {
 							client.logger.error(e);
 						} else {

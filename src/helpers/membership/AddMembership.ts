@@ -25,7 +25,7 @@ const addMembership = async (
 			{ discordID: discordID },
 			{ discordID: discordID, ieeeID: ieeeID },
 			{ upsert: true },
-			(e: any) => {
+			(e: unknown) => {
 				if (e) {
 					client.logger.error(e);
 				} else {

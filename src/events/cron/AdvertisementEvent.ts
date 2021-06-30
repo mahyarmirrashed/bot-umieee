@@ -67,7 +67,7 @@ export const run: RunFunction = async (client: Bot): Promise<void> => {
 					);
 			}
 		})
-		.catch((e: any) => client.logger.error(e));
+		.catch((e: unknown) => client.logger.error(e));
 };
 
-export const name: string = 'advertise';
+export const name = 'advertise';

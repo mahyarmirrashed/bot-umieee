@@ -23,11 +23,9 @@ export const run: RunFunction = async (
 	});
 };
 
-export const usage: string = `**Usage:** \`${
-	process.env.PREFIX as string
-}ping\``;
+export const usage = `**Usage:** \`${process.env.PREFIX as string}ping\``;
 
-export const maximumArguments: number = 0;
-export const minimumArguments: number = 0;
-export const name: string = 'ping';
+export const maximumArguments = 0;
+export const minimumArguments = 0;
+export const name = 'ping';
 export const permissions: Permissions[] = [];

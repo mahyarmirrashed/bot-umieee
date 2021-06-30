@@ -8,8 +8,8 @@ import Bot from '../../client/Client';
 import addNomination from '../../helpers/cotw/AddNomination';
 import RunFunction from '../../interfaces/RunFunctionStorage';
 
-const DIGIT_PATTERN: RegExp = RegExp('\\d+', 'g');
-const MAXIMUM_REASON_LENGTH: number = 50;
+const DIGIT_PATTERN = RegExp('\\d+', 'g');
+const MAXIMUM_REASON_LENGTH = 50;
 
 export const run: RunFunction = async (
 	client: Bot,
@@ -45,7 +45,7 @@ export const run: RunFunction = async (
 									reason
 								);
 							})
-							.catch((e: any) => client.logger.error(e));
+							.catch((e: unknown) => client.logger.error(e));
 					} else {
 						client.sendReplyEmbed(message, {
 							description: `**Error:** Maximum reason length is ${MAXIMUM_REASON_LENGTH} characters.`,
@@ -80,11 +80,11 @@ export const run: RunFunction = async (
 	}
 };
 
-export const usage: string = `**Usage:** \`${
+export const usage = `**Usage:** \`${
 	process.env.PREFIX as string
 }nominate <@user> [reason]\``;
 
 export const maximumArguments: number = Number.POSITIVE_INFINITY;
-export const minimumArguments: number = 2;
-export const name: string = 'nominate';
+export const minimumArguments = 2;
+export const name = 'nominate';
 export const permissions: PermissionResolvable[] = [];

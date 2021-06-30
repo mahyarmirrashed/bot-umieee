@@ -7,8 +7,8 @@ import {
 import Bot from '../../client/Client';
 import RunFunction from '../../interfaces/RunFunctionStorage';
 
-const DEFAULT_AMOUNT: number = 99;
-const DIGIT_PATTERN: RegExp = RegExp('^\\d+$', 'g');
+const DEFAULT_AMOUNT = 99;
+const DIGIT_PATTERN = RegExp('^\\d+$', 'g');
 
 export const run: RunFunction = async (
 	client: Bot,
@@ -16,7 +16,7 @@ export const run: RunFunction = async (
 	args: string[]
 ): Promise<void> => {
 	let amount: number = DEFAULT_AMOUNT;
-	let [limit] = args;
+	const [limit] = args;
 
 	// parse limit, if provided
 	if (args.length == 1 && !DIGIT_PATTERN.test(limit)) {
@@ -46,13 +46,13 @@ export const run: RunFunction = async (
 	}
 };
 
-export const usage: string = `**Usage:** \`${
+export const usage = `**Usage:** \`${
 	process.env.PREFIX as string
 }clear (amount)\``;
 
-export const maximumArguments: number = 1;
-export const minimumArguments: number = 0;
-export const name: string = 'clear';
+export const maximumArguments = 1;
+export const minimumArguments = 0;
+export const name = 'clear';
 export const permissions: PermissionResolvable[] = [
 	Permissions.FLAGS.MANAGE_MESSAGES,
 ];

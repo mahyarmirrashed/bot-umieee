@@ -48,7 +48,7 @@ export default class Bot extends Client {
 		// log into client
 		super
 			.login(process.env.DISCORD_BOT_TOKEN as string)
-			.catch((e: any) => this.logger.error(e));
+			.catch((e: unknown) => this.logger.error(e));
 
 		// log into database
 		connect(process.env.DATABASE_URI as string, {
@@ -60,7 +60,7 @@ export default class Bot extends Client {
 			.then(() => {
 				this.logger.success('UMIEEE database connection established!');
 			})
-			.catch((e: any) => this.logger.error(e));
+			.catch((e: unknown) => this.logger.error(e));
 	}
 
 	public start(): void {
@@ -74,7 +74,7 @@ export default class Bot extends Client {
 					});
 				});
 			})
-			.catch((e: any) => this.logger.error(e));
+			.catch((e: unknown) => this.logger.error(e));
 		// set up events
 		globPromise(`${__dirname}/../events/**/*{.ts,.js}`)
 			.then((eventsFiles: string[]) => {
@@ -86,7 +86,7 @@ export default class Bot extends Client {
 					});
 				});
 			})
-			.catch((e: any) => this.logger.error(e));
+			.catch((e: unknown) => this.logger.error(e));
 	}
 
 	public async sendEmbed(
@@ -96,7 +96,7 @@ export default class Bot extends Client {
 	): Promise<void | Message> {
 		return channel
 			.send(new MessageEmbed({ ...options, color: color }))
-			.catch((e: any) => this.logger.error(e));
+			.catch((e: unknown) => this.logger.error(e));
 	}
 
 	public async sendReplyEmbed(
@@ -106,6 +106,6 @@ export default class Bot extends Client {
 	): Promise<void | Message> {
 		return message.channel
 			.send(new MessageEmbed({ ...options, color: color }))
-			.catch((e: any) => this.logger.error(e));
+			.catch((e: unknown) => this.logger.error(e));
 	}
 }

@@ -7,5 +7,5 @@ export default interface Command {
 	name: string;
 	permissions: PermissionResolvable[];
 	run: RunFunction;
-    usage: string;
+	usage: string;
 }
