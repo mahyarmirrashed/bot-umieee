@@ -7,6 +7,7 @@ import {
 } from 'discord.js';
 import Bot from '../../client/Client';
 import addMembership from '../../helpers/membership/AddMembership';
+import generateValidationToken from '../../helpers/membership/GenerateValidationToken';
 import modifyRole from '../../helpers/membership/ModifyRole';
 import RunFunction from '../../interfaces/RunFunctionStorage';
 
@@ -38,8 +39,12 @@ export const run: RunFunction = async (
 					) {
 						// add member to database for validation
 						addMembership(client, message, member.user.id, ieeeID);
-						// update user role
-						modifyRole(client, member, message.guild.roles, ieeeID);
+						// generate validation token
+						const token: string | void = await generateValidationToken(client);
+						// upon valid token, update user role
+						if (token) {
+							modifyRole(client, token, member, message.guild.roles, ieeeID);
+						}
 					} else {
 						client.sendReplyEmbed(message, {
 							description: [

@@ -26,10 +26,10 @@ export const run: RunFunction = async (client: Bot): Promise<void> => {
 				.day(-7)
 				.toISOString()}~${moment().day(0).toISOString()}`
 		)
-		.then((response: AxiosResponse) => {
+		.then((res: AxiosResponse) => {
 			const {
 				data: { data: advertisements },
-			}: { data: { data: Advertisement[] } } = response;
+			}: { data: { data: Advertisement[] } } = res;
 
 			if (client.guild) {
 				// find 'events' channel

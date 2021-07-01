@@ -4,6 +4,7 @@ import Bot from '../../client/Client';
 
 const modifyRole = async (
 	client: Bot,
+	token: string,
 	member: GuildMember,
 	roles: RoleManager,
 	ieeeID: string
@@ -15,16 +16,16 @@ const modifyRole = async (
 		(role: Role) => role.name.toLowerCase() === 'inactive'
 	) as Role;
 
-	if (validateMembership(ieeeID)) {
+	if (await validateMembership(client, token, ieeeID)) {
 		member.roles
 			.add(active)
 			.then((member: GuildMember) => member.roles.remove(inactive))
-			.catch((e: any) => client.logger.error(e));
+			.catch((e: unknown) => client.logger.error(e));
 	} else {
 		member.roles
 			.add(inactive)
 			.then((member: GuildMember) => member.roles.remove(active))
-			.catch((e: any) => client.logger.error(e));
+			.catch((e: unknown) => client.logger.error(e));
 	}
 };
 
