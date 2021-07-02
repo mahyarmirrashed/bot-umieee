@@ -1,4 +1,5 @@
 import consola, { Consola } from 'consola';
+import { CronJob } from 'cron';
 import {
 	Client,
 	Collection,
@@ -16,6 +17,10 @@ import { promisify } from 'util';
 
 import Command from '../interfaces/CommandStorage';
 import Event from '../interfaces/EventStorage';
+
+import { run as postAdvertisements } from '../events/cron/AdvertisementEvent';
+import { run as validateMembers } from '../events/cron/ValidateEvent';
+import { run as cotwVote } from '../events/cron/VoteEvent';
 
 const globPromise = promisify(glob);
 
@@ -61,6 +66,11 @@ export default class Bot extends Client {
 				this.logger.success('UMIEEE database connection established!');
 			})
 			.catch((e: unknown) => this.logger.error(e));
+
+		// set up cron jobs
+		new CronJob('0 0 * * MON', () => postAdvertisements(this)).start();
+		new CronJob('0 0 * * MON', () => cotwVote(this)).start();
+		new CronJob('0 0 * * *', () => validateMembers(this)).start();
 	}
 
 	public start(): void {

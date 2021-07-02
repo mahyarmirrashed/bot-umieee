@@ -27,9 +27,9 @@ export const run: RunFunction = async (
 		const memberID: RegExpMatchArray | null = discordID.match(DIGIT_PATTERN);
 
 		if (memberID) {
-			if (message.guild) {
-				const member: GuildMember = message.guild.member(
-					memberID[0]
+			if (client.guild) {
+				const member: GuildMember = client.guild.member(
+					memberID.shift() as string
 				) as GuildMember;
 
 				if (member) {
@@ -43,7 +43,7 @@ export const run: RunFunction = async (
 						const token: string | void = await generateValidationToken(client);
 						// upon valid token, update user role
 						if (token) {
-							modifyRole(client, token, member, message.guild.roles, ieeeID);
+							modifyRole(client, token, member, client.guild.roles, ieeeID);
 						}
 					} else {
 						client.sendReplyEmbed(message, {

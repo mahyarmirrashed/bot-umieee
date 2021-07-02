@@ -4,9 +4,10 @@
 	"description": "Bot for UMIEEE Discord server.",
 	"main": "index.js",
 	"scripts": {
+		"build": "tsc --build tsconfig.json",
 		"dev": "ts-node-dev --respawn --transpile-only --poll ./src/index.ts",
 		"lint": "prettier --write .",
-		"build": "tsc --build tsconfig.json"
+		"start": ""
 	},
 	"keywords": [],
 	"author": "Mahyar Mirrashed <mah.mirr@gmail.com>",
@@ -14,8 +15,13 @@
 	"devDependencies": {
 		"@commitlint/cli": "^12.1.4",
 		"@commitlint/config-angular": "^12.1.4",
+		"@types/cron": "^1.7.2",
 		"@types/glob": "^7",
 		"@types/node": "^15.12.2",
+		"@types/turndown": "^5.0.0",
+		"@typescript-eslint/eslint-plugin": "^4.28.0",
+		"@typescript-eslint/parser": "^4.28.0",
+		"eslint": "^7.29.0",
 		"prettier": "^2.3.1",
 		"ts-node": "^10.0.0",
 		"ts-node-dev": "^1.1.6",
@@ -51,10 +57,16 @@
 		}
 	},
 	"dependencies": {
+		"axios": "^0.21.1",
 		"consola": "^2.15.3",
+		"cron": "^1.8.2",
+		"discord-emoji": "^2.0.1",
 		"discord.js": "^12.5.3",
+		"dotenv": "^10.0.0",
 		"glob": "^7.1.7",
-		"mongoose": "^5.12.14"
+		"moment": "^2.29.1",
+		"mongoose": "^5.12.14",
+		"turndown": "^7.0.0"
 	},
 	"private": true
 }
