@@ -11,7 +11,7 @@ import generateValidationToken from '../../helpers/membership/GenerateValidation
 import modifyRole from '../../helpers/membership/ModifyRole';
 import RunFunction from '../../interfaces/RunFunctionStorage';
 
-const IEEE_NUMBER_LENGTH = 9;
+const IEEE_NUMBER_LENGTH = 8;
 const DIGIT_PATTERN = RegExp('\\d+', 'g');
 
 export const run: RunFunction = async (
@@ -28,14 +28,14 @@ export const run: RunFunction = async (
 
 		if (memberID) {
 			if (client.guild) {
-				const member: GuildMember = client.guild.member(
+				const member: GuildMember = await client.guild.members.fetch(
 					memberID.shift() as string
 				) as GuildMember;
 
 				if (member) {
 					if (
 						ieeeID.length == IEEE_NUMBER_LENGTH &&
-						DIGIT_PATTERN.test(ieeeID)
+						RegExp('^\\d+$', 'g').test(ieeeID)
 					) {
 						// add member to database for validation
 						addMembership(client, message, member.user.id, ieeeID);
