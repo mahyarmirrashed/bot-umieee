@@ -12,12 +12,14 @@ export const run: RunFunction = async (client: Bot): Promise<void> => {
 	// upon valid token, update all member roles
 	if (token) {
 		((await MembershipModel.find({}).exec()) as Membership[]).forEach(
-			(membership: Membership) => {
+			async (membership: Membership) => {
 				if (client.guild) {
 					modifyRole(
 						client,
 						token,
-						client.guild.member(membership.discordID) as GuildMember,
+						(await client.guild.members.fetch(
+							membership.discordID
+						)) as GuildMember,
 						client.guild.roles,
 						membership.ieeeID
 					);
