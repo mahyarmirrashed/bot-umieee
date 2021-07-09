@@ -1,12 +1,13 @@
 {
 	"compilerOptions": {
+		"incremental": true,
 		"lib": ["ESNext"],
 		"module": "commonjs",
 		"moduleResolution": "node",
 		"target": "ESNext",
 		"outDir": "dist",
 		"types": ["node"],
-        "strict": true,
+		"strict": true,
 		"sourceMap": true,
 		"esModuleInterop": true,
 		"experimentalDecorators": true,

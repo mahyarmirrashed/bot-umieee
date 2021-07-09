@@ -1,8 +1,4 @@
-import {
-	Message,
-	PermissionResolvable,
-	GuildMember,
-} from 'discord.js';
+import { Message, PermissionResolvable, GuildMember } from 'discord.js';
 import Bot from '../../client/Client';
 import addNomination from '../../helpers/cotw/AddNomination';
 import RunFunction from '../../interfaces/RunFunctionStorage';
