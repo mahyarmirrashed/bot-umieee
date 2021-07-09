@@ -3,7 +3,6 @@ import Bot from '../../client/Client';
 import ValidationResponse from '../../types/ValidationResponseType';
 
 const ACTIVE = 'Active';
-const GRADE = 'Student Member';
 
 const validateMembership = async (
 	client: Bot,
@@ -26,7 +25,7 @@ const validateMembership = async (
 		)
 		.then((res: AxiosResponse) => {
 			const valRes = res.data as ValidationResponse;
-			valid = valRes.MemberStatus === ACTIVE && valRes.Grade === GRADE;
+			valid = valRes.MemberStatus === ACTIVE;
 		})
 		.catch((e: unknown) => client.logger.error(e));
 
