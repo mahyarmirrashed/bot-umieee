@@ -25,6 +25,8 @@ export const run: RunFunction = async (
 
 export const usage = `**Usage:** \`${process.env.PREFIX as string}ping\``;
 
+export const listBlack = [];
+export const listWhite = [];
 export const maximumArguments = 0;
 export const minimumArguments = 0;
 export const name = 'ping';

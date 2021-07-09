@@ -8,7 +8,7 @@ import Bot from '../../client/Client';
 import RunFunction from '../../interfaces/RunFunctionStorage';
 
 const DEFAULT_AMOUNT = 99;
-const DIGIT_PATTERN = RegExp('^\\d+$', 'g');
+const DIGIT_PATTERN = () => new RegExp('^\\d+$', 'g');
 
 export const run: RunFunction = async (
 	client: Bot,
@@ -19,7 +19,7 @@ export const run: RunFunction = async (
 	const [limit] = args;
 
 	// parse limit, if provided
-	if (args.length == 1 && !DIGIT_PATTERN.test(limit)) {
+	if (args.length == 1 && !DIGIT_PATTERN().test(limit)) {
 		client.sendReplyEmbed(message, {
 			description: ['**Error:** Invalid integer format.', usage].join('\n'),
 		});
@@ -50,6 +50,8 @@ export const usage = `**Usage:** \`${
 	process.env.PREFIX as string
 }clear (amount)\``;
 
+export const listBlack = ['bots'];
+export const listWhite = [];
 export const maximumArguments = 1;
 export const minimumArguments = 0;
 export const name = 'clear';
