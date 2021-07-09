@@ -7,7 +7,7 @@
 		"build": "tsc --build tsconfig.json",
 		"dev": "ts-node-dev --respawn --transpile-only --poll ./src/index.ts",
 		"lint": "prettier --write .",
-		"start": ""
+		"start": "node dist/index.js"
 	},
 	"keywords": [],
 	"author": "Mahyar Mirrashed <mah.mirr@gmail.com>",
