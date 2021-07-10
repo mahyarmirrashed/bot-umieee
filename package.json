@@ -9,8 +9,8 @@
 		"lint": "prettier --write .",
 		"start": "node dist/index.js"
 	},
-	"keywords": [],
-	"author": "Mahyar Mirrashed <mah.mirr@gmail.com>",
+	"keywords": ["umieee", "bot"],
+	"author": "Mahyar Mirrashed",
 	"license": "MIT",
 	"devDependencies": {
 		"@commitlint/cli": "^12.1.4",
