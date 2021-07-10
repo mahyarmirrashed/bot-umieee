@@ -9,7 +9,10 @@
 		"lint": "prettier --write .",
 		"start": "node dist/index.js"
 	},
-	"keywords": ["umieee", "bot"],
+	"keywords": [
+		"umieee",
+		"bot"
+	],
 	"author": "Mahyar Mirrashed",
 	"license": "MIT",
 	"devDependencies": {
