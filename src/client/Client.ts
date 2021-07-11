@@ -79,7 +79,7 @@ export default class Bot extends Client {
 			.then((commandFiles: string[]) => {
 				commandFiles.map(async (value: string) => {
 					import(value).then((file: Command) => {
-						this.logger.log(`Registering command "${file.name}"...`);
+						this.logger.info(`Registering command "${file.name}"...`);
 						this.commands.set(file.name, file);
 					});
 				});
@@ -90,7 +90,7 @@ export default class Bot extends Client {
 			.then((eventsFiles: string[]) => {
 				eventsFiles.map(async (value: string) => {
 					import(value).then((file: Event) => {
-						this.logger.log(`Registering event "${file.name}"...`);
+						this.logger.info(`Registering event "${file.name}"...`);
 						this.events.set(file.name, file);
 						this.on(file.name, file.run.bind(null, this));
 					});
