@@ -8,7 +8,7 @@ export const run: RunFunction = async (
 ): Promise<void> => {
 	client.logger.info(`${guildMember.id} joined the channel!`);
 	// assign guild member inactive role upon re-entry
-	if (client.guild) {
+	if (client.guild && !guildMember.user.bot) {
 		guildMember.roles
 			.add(
 				client.guild.roles.cache.find(
