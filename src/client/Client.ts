@@ -5,10 +5,12 @@ import {
 	Collection,
 	Guild,
 	Intents,
+	LimitedCollection,
 	Message,
 	MessageEmbed,
 	MessageEmbedOptions,
 	NewsChannel,
+	Options,
 	TextChannel,
 } from 'discord.js';
 import glob from 'glob';
@@ -34,21 +36,30 @@ export default class Bot extends Client {
 	public guild!: Guild | undefined;
 
 	public constructor() {
-		// setup client connection options
 		super({
-			ws: {
-				intents: [
-					Intents.FLAGS.GUILDS,
-					Intents.FLAGS.GUILD_EMOJIS,
-					Intents.FLAGS.GUILD_MEMBERS,
-					Intents.FLAGS.GUILD_MESSAGES,
-					Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
-				],
-			},
-			messageCacheLifetime: 180,
-			messageCacheMaxSize: 200,
-			messageEditHistoryMaxSize: 200,
-			messageSweepInterval: 180,
+			// list intents bot requires for functionality
+			intents: [
+				Intents.FLAGS.GUILDS,
+				Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
+				Intents.FLAGS.GUILD_MEMBERS,
+				Intents.FLAGS.GUILD_MESSAGES,
+				Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+			],
+			// caching options for threads and messages
+			makeCache: Options.cacheWithLimits({
+				// default thread sweeping behaviour
+				...Options.defaultMakeCacheSettings,
+				// sweep messages every 3 minutes
+				MessageManager: {
+					sweepInterval: 180,
+					sweepFilter: LimitedCollection.filterByLifetime({
+						lifetime: 1800,
+						getComparisonTimestamp: (e) =>
+							e.editedTimestamp ?? e.createdTimestamp,
+					}),
+					maxSize: 200,
+				},
+			}),
 		});
 
 		// log into client
