@@ -17,7 +17,7 @@ const NominationSchema: Schema = new Schema(
 		collection: 'nominations',
 		minimize: false,
 		strictQuery: true,
-	}
+	},
 );
 
 export default model<Nomination>('Nomination', NominationSchema);

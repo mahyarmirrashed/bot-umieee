@@ -7,7 +7,7 @@ const addMembership = async (
 	client: Bot,
 	message: Message,
 	discordID: Snowflake,
-	ieeeID: string
+	ieeeID: string,
 ): Promise<void> => {
 	// check if other users exist with same ieeeID but different discordID
 	const res: Membership = (await MembershipModel.findOne({
@@ -35,14 +35,14 @@ const addMembership = async (
 						{
 							description: `Successfully assigned <@${discordID}> the IEEE ID, ${ieeeID}!`,
 						},
-						'GREEN'
+						'GREEN',
 					);
 					// log database upsertion
 					client.logger.success('Successfully upserted new member:');
 					client.logger.info(`discordID: ${discordID}`);
 					client.logger.info(`ieeeID: ${ieeeID}`);
 				}
-			}
+			},
 		);
 	}
 };

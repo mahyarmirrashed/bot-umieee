@@ -66,11 +66,6 @@ export default class Bot extends Client {
 				this.logger.success('UMIEEE database connection established!');
 			})
 			.catch((e: unknown) => this.logger.error(e));
-
-		// set up cron jobs
-		new CronJob('0 0 * * MON', () => postAdvertisements(this)).start();
-		new CronJob('0 0 * * MON', () => cotwVote(this)).start();
-		new CronJob('0 0 * * *', () => validateMembers(this)).start();
 	}
 
 	public start(): void {
@@ -97,12 +92,17 @@ export default class Bot extends Client {
 				});
 			})
 			.catch((e: unknown) => this.logger.error(e));
+
+		// set up cron jobs
+		new CronJob('0 0 * * MON', () => postAdvertisements(this)).start();
+		new CronJob('0 0 * * MON', () => cotwVote(this)).start();
+		new CronJob('0 0 * * *', () => validateMembers(this)).start();
 	}
 
 	public async sendEmbed(
 		channel: TextChannel | NewsChannel,
 		options: MessageEmbedOptions,
-		color = 'BLUE'
+		color = 'BLUE',
 	): Promise<void | Message> {
 		return channel
 			.send(new MessageEmbed({ ...options, color: color }))
@@ -112,7 +112,7 @@ export default class Bot extends Client {
 	public async sendReplyEmbed(
 		message: Message,
 		options: MessageEmbedOptions,
-		color = 'RED'
+		color = 'RED',
 	): Promise<void | Message> {
 		return message.channel
 			.send(new MessageEmbed({ ...options, color: color }))

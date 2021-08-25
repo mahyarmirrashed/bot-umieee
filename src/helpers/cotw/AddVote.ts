@@ -22,7 +22,7 @@ const addVote = async (client: Bot): Promise<void> => {
 		// find 'cotw' channel
 		const channel: TextChannel = client.guild.channels.cache.find(
 			(channel: GuildChannel) =>
-				channel.name === 'cotw' && channel instanceof TextChannel
+				channel.name === 'cotw' && channel instanceof TextChannel,
 		) as TextChannel;
 
 		if (channel) {
@@ -40,8 +40,8 @@ const addVote = async (client: Bot): Promise<void> => {
 						.map(
 							(
 								{ nominee, reason }: { nominee: string; reason: string },
-								i: number
-							) => `${foodEmojis[i]} : <@${nominee}> for "${reason}".`
+								i: number,
+							) => `${foodEmojis[i]} : <@${nominee}> for "${reason}".`,
 						)
 						.join('\n'),
 				].join('\n'),
@@ -66,7 +66,7 @@ const addVote = async (client: Bot): Promise<void> => {
 							client.logger.success('Successfully updated nomination:');
 							client.logger.info(`message: ${message.id}`);
 						}
-					}
+					},
 				);
 			}
 		}

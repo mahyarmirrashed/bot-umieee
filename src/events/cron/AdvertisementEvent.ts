@@ -21,7 +21,7 @@ export const run: RunFunction = async (client: Bot): Promise<void> => {
 	axios
 		.get(
 			// fetch all upcoming events
-			'https://events.vtools.ieee.org/feeds/v2/c/R70031?span=now~&sort=start_time'
+			'https://events.vtools.ieee.org/feeds/v2/c/R70031?span=now~&sort=start_time',
 		)
 		.then((res: AxiosResponse) => {
 			const {
@@ -32,7 +32,7 @@ export const run: RunFunction = async (client: Bot): Promise<void> => {
 				// find 'events' channel
 				const channel: TextChannel = client.guild.channels.cache.find(
 					(channel: GuildChannel) =>
-						channel.name === 'events' && channel instanceof TextChannel
+						channel.name === 'events' && channel instanceof TextChannel,
 				) as TextChannel;
 
 				// header for advertisements
@@ -49,8 +49,8 @@ export const run: RunFunction = async (client: Bot): Promise<void> => {
 						description: new TurndownService().turndown(
 							advertisement.attributes.description.replace(
 								/\\(["'\\bfnrt])/g,
-								(_, c) => `${MAPPINGS[c] || c}`
-							)
+								(_, c) => `${MAPPINGS[c] || c}`,
+							),
 						),
 						fields: [
 							{
@@ -59,7 +59,7 @@ export const run: RunFunction = async (client: Bot): Promise<void> => {
 								inline: true,
 							},
 						],
-					})
+					}),
 				);
 			}
 		})

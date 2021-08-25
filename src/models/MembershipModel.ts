@@ -10,7 +10,7 @@ const MembershipSchema: Schema = new Schema(
 		collection: 'members',
 		minimize: false,
 		strictQuery: true,
-	}
+	},
 );
 
 export default model<Membership>('Member', MembershipSchema);

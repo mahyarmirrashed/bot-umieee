@@ -7,13 +7,13 @@ const modifyRole = async (
 	token: string,
 	member: GuildMember,
 	roles: RoleManager,
-	ieeeID: string
+	ieeeID: string,
 ): Promise<void> => {
 	const active: Role = roles.cache.find(
-		(role: Role) => role.name.toLowerCase() === 'active'
+		(role: Role) => role.name.toLowerCase() === 'active',
 	) as Role;
 	const inactive: Role = roles.cache.find(
-		(role: Role) => role.name.toLowerCase() === 'inactive'
+		(role: Role) => role.name.toLowerCase() === 'inactive',
 	) as Role;
 
 	if (await validateMembership(client, token, ieeeID)) {

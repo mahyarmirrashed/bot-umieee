@@ -16,7 +16,7 @@ const DIGIT_PATTERN = () => new RegExp('\\d+', 'g');
 export const run: RunFunction = async (
 	client: Bot,
 	message: Message,
-	args: string[]
+	args: string[],
 ): Promise<void> => {
 	const [discordID, ieeeID] = args;
 	const memberID: RegExpMatchArray | null = discordID.match(DIGIT_PATTERN());
@@ -24,7 +24,7 @@ export const run: RunFunction = async (
 	if (memberID) {
 		if (client.guild) {
 			const member: GuildMember = (await client.guild.members.fetch(
-				memberID.shift() as string
+				memberID.shift() as string,
 			)) as GuildMember;
 
 			if (member) {

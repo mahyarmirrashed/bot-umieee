@@ -4,7 +4,7 @@ import RunFunction from '../../interfaces/RunFunctionStorage';
 
 export const run: RunFunction = async (
 	client: Bot,
-	message: Message
+	message: Message,
 ): Promise<void> => {
 	message.channel.send('Pong!').then((pong: Message) => {
 		client.sendReplyEmbed(
@@ -16,7 +16,7 @@ export const run: RunFunction = async (
 					pong.createdTimestamp - message.createdTimestamp
 				}ms\`.`,
 			},
-			'GREEN'
+			'GREEN',
 		);
 		pong.delete();
 		message.delete();

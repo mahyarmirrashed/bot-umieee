@@ -6,7 +6,8 @@
 	"scripts": {
 		"build": "tsc --build tsconfig.json",
 		"dev": "ts-node-dev --respawn --transpile-only --poll ./src/index.ts",
-		"lint": "prettier --write .",
+		"format": "prettier --write .",
+		"lint": "eslint \"**/*.{ts,tsx}\"",
 		"start": "node dist/index.js"
 	},
 	"keywords": [
@@ -16,8 +17,6 @@
 	"author": "Mahyar Mirrashed",
 	"license": "MIT",
 	"devDependencies": {
-		"@commitlint/cli": "^12.1.4",
-		"@commitlint/config-angular": "^12.1.4",
 		"@types/cron": "^1.7.2",
 		"@types/glob": "^7",
 		"@types/node": "^15.12.2",
@@ -25,39 +24,16 @@
 		"@typescript-eslint/eslint-plugin": "^4.28.0",
 		"@typescript-eslint/parser": "^4.28.0",
 		"eslint": "^7.29.0",
+		"eslint-config-airbnb-base": "^14.2.1",
+		"eslint-config-airbnb-typescript": "^14.0.0",
+		"eslint-config-prettier": "^8.3.0",
+		"eslint-import-resolver-typescript": "^2.4.0",
+		"eslint-plugin-import": "^2.24.2",
+		"eslint-plugin-prettier": "^3.4.1",
 		"prettier": "^2.3.1",
 		"ts-node": "^10.0.0",
 		"ts-node-dev": "^1.1.6",
 		"typescript": "^4.3.3"
-	},
-	"commitlint": {
-		"extends": [
-			"@commitlint/config-angular"
-		],
-		"rules": {
-			"scope-case": [
-				2,
-				"always",
-				"pascal-case"
-			],
-			"type-enum": [
-				2,
-				"always",
-				[
-					"chore",
-					"build",
-					"ci",
-					"docs",
-					"feat",
-					"fix",
-					"perf",
-					"refactor",
-					"revert",
-					"style",
-					"test"
-				]
-			]
-		}
 	},
 	"dependencies": {
 		"axios": "^0.21.1",

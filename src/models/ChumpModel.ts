@@ -10,7 +10,7 @@ const ChumpSchema: Schema = new Schema(
 		collection: 'chumps',
 		minimize: false,
 		strictQuery: true,
-	}
+	},
 );
 
 export default model<Chump>('Chump', ChumpSchema);

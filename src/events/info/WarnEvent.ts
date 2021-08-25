@@ -3,7 +3,7 @@ import RunFunction from '../../interfaces/RunFunctionStorage';
 
 export const run: RunFunction = async (
 	client: Bot,
-	info: string
+	info: string,
 ): Promise<void> => {
 	client.logger.info(info);
 };

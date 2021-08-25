@@ -7,7 +7,7 @@ const ACTIVE = 'Active';
 const validateMembership = async (
 	client: Bot,
 	token: string,
-	ieeeID: string
+	ieeeID: string,
 ): Promise<boolean> => {
 	let valid = false;
 
@@ -21,7 +21,7 @@ const validateMembership = async (
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
-			}
+			},
 		)
 		.then((res: AxiosResponse) => {
 			const valRes = res.data as ValidationResponse;

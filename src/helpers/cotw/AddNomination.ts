@@ -11,7 +11,7 @@ const addNomination = async (
 	message: Message,
 	nominator: Snowflake,
 	nominee: Snowflake,
-	reason: string
+	reason: string,
 ): Promise<void> => {
 	// get stringified date for previous Monday
 	const week: string = moment().day(1).toISOString(true).split('T')[0];
@@ -81,7 +81,7 @@ const addNomination = async (
 								`**Reason:** "${reason}".`,
 							].join('\n'),
 						},
-						'GREEN'
+						'GREEN',
 					);
 					// log database upsertion
 					client.logger.success('Successfully upserted new nomination:');
@@ -89,7 +89,7 @@ const addNomination = async (
 					client.logger.info(`nominee: ${nominee}`);
 					client.logger.info(`reason: "${reason}"`);
 				}
-			}
+			},
 		);
 	}
 };

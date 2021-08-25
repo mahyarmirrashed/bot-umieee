@@ -8,7 +8,7 @@ export const run: RunFunction = async (client: Bot): Promise<void> => {
 		client.guild = await client.guilds.fetch(process.env.GUILD as string);
 	} else {
 		client.logger.error(
-			'`user` property on `client` was `null` for some reason...'
+			'`user` property on `client` was `null` for some reason...',
 		);
 	}
 };

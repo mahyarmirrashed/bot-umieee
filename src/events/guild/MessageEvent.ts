@@ -5,7 +5,7 @@ import Command from '../../interfaces/CommandStorage';
 
 export const run: RunFunction = async (
 	client: Bot,
-	message: Message
+	message: Message,
 ): Promise<void> => {
 	if (
 		!message.author.bot &&
@@ -24,13 +24,13 @@ export const run: RunFunction = async (
 			const name = message.channel.name;
 			if (
 				command.listBlack.every(
-					(deniedChannel: string) => deniedChannel !== name
+					(deniedChannel: string) => deniedChannel !== name,
 				)
 			) {
 				if (
 					command.listWhite.length == 0 ||
 					command.listWhite.some(
-						(permittedChannel: string) => permittedChannel === name
+						(permittedChannel: string) => permittedChannel === name,
 					)
 				) {
 					if (
@@ -44,7 +44,7 @@ export const run: RunFunction = async (
 									.catch((e: unknown) =>
 										client.sendReplyEmbed(message, {
 											description: `An error occurred: ${e}`,
-										})
+										}),
 									)
 									.catch((e: unknown) => client.logger.error(e));
 							} else {
@@ -53,7 +53,7 @@ export const run: RunFunction = async (
 									{
 										description: 'Unauthorized command!',
 									},
-									'DARK_RED'
+									'DARK_RED',
 								);
 							}
 						} else {

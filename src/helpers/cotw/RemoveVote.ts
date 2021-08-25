@@ -28,7 +28,7 @@ const removeVote = async (client: Bot): Promise<void> => {
 		// find 'cotw' channel
 		const channel: TextChannel = client.guild.channels.cache.find(
 			(channel: GuildChannel) =>
-				channel.name === 'cotw' && channel instanceof TextChannel
+				channel.name === 'cotw' && channel instanceof TextChannel,
 		) as TextChannel;
 
 		if (channel) {
@@ -38,7 +38,7 @@ const removeVote = async (client: Bot): Promise<void> => {
 			];
 			// fetch message from channel
 			const message: Message = (await channel.messages.fetch(
-				res.message
+				res.message,
 			)) as Message;
 			// keep track of chumps
 			const chumps: Set<string> = new Set<string>();
@@ -46,8 +46,8 @@ const removeVote = async (client: Bot): Promise<void> => {
 			// calculate most voted reactions
 			const maximum: number = Math.max(
 				...message.reactions.cache.map(
-					(reaction: MessageReaction) => reaction.count as number
-				)
+					(reaction: MessageReaction) => reaction.count as number,
+				),
 			);
 
 			message.reactions.cache
@@ -73,7 +73,7 @@ const removeVote = async (client: Bot): Promise<void> => {
 								client.logger.success('Successfully added chump to set:');
 								client.logger.info(`chump: ${chump}`);
 							}
-						}
+						},
 					);
 				});
 

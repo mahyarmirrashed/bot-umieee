@@ -9,7 +9,7 @@ const MAXIMUM_REASON_LENGTH = 50;
 export const run: RunFunction = async (
 	client: Bot,
 	message: Message,
-	args: string[]
+	args: string[],
 ): Promise<void> => {
 	const [discordID, ...reasonArr] = args;
 	const memberID: RegExpMatchArray | null = discordID.match(DIGIT_PATTERN());
@@ -17,7 +17,7 @@ export const run: RunFunction = async (
 	if (memberID) {
 		if (message.guild) {
 			const member: GuildMember = message.guild.member(
-				memberID[0]
+				memberID[0],
 			) as GuildMember;
 			const reason: string = reasonArr.join(' ');
 
@@ -33,7 +33,7 @@ export const run: RunFunction = async (
 								message,
 								message.author.id,
 								member.id,
-								reason
+								reason,
 							);
 						})
 						.catch((e: unknown) => client.logger.error(e));

@@ -18,13 +18,13 @@ export const run: RunFunction = async (client: Bot): Promise<void> => {
 						client,
 						token,
 						(await client.guild.members.fetch(
-							membership.discordID
+							membership.discordID,
 						)) as GuildMember,
 						client.guild.roles,
-						membership.ieeeID
+						membership.ieeeID,
 					);
 				}
-			}
+			},
 		);
 	}
 };

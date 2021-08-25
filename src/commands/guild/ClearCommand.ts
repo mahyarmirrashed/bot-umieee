@@ -13,7 +13,7 @@ const DIGIT_PATTERN = () => new RegExp('^\\d+$', 'g');
 export const run: RunFunction = async (
 	client: Bot,
 	message: Message,
-	args: string[]
+	args: string[],
 ): Promise<void> => {
 	let amount: number = DEFAULT_AMOUNT;
 	const [limit] = args;

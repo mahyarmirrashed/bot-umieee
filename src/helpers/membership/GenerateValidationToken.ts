@@ -12,7 +12,7 @@ const generateValidationToken = async (client: Bot): Promise<string | void> => {
 				client_id: process.env.VALIDATOR_CLIENT_ID as string,
 				client_secret: process.env.VALIDATOR_SECRET as string,
 				scope: 'GetMemberStatus',
-			})
+			}),
 		)
 		.then((res: AxiosResponse) => (res.data as TokenResponse).access_token)
 		.catch((e: unknown) => client.logger.error(e));
