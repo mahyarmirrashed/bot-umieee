@@ -64,7 +64,7 @@ export default class Bot extends Client {
 
 		// log into client
 		super
-			.login(process.env.DISCORD_BOT_TOKEN as string)
+			.login(process.env.DISCORD_TOKEN as string)
 			.catch((e: unknown) => this.logger.error(e));
 
 		// log into database
