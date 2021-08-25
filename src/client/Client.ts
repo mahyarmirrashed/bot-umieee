@@ -21,6 +21,7 @@ import Event from '../interfaces/EventStorage';
 import { run as postAdvertisements } from '../events/cron/AdvertisementEvent';
 import { run as validateMembers } from '../events/cron/ValidateEvent';
 import { run as cotwVote } from '../events/cron/VoteEvent';
+import { cyan } from 'chalk';
 
 const globPromise = promisify(glob);
 
@@ -74,7 +75,7 @@ export default class Bot extends Client {
 			.then((commandFiles: string[]) => {
 				commandFiles.map(async (value: string) => {
 					import(value).then((file: Command) => {
-						this.logger.info(`Registering command "${file.name}"...`);
+						this.logger.info(`Registering command ${cyan(file.name)}...`);
 						this.commands.set(file.name, file);
 					});
 				});
@@ -85,7 +86,7 @@ export default class Bot extends Client {
 			.then((eventsFiles: string[]) => {
 				eventsFiles.map(async (value: string) => {
 					import(value).then((file: Event) => {
-						this.logger.info(`Registering event "${file.name}"...`);
+						this.logger.info(`Registering event ${cyan(file.name)}...`);
 						this.events.set(file.name, file);
 						this.on(file.name, file.run.bind(null, this));
 					});
