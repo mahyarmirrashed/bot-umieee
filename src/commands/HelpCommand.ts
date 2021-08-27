@@ -26,5 +26,6 @@ export const handle = (_client: Bot, interaction: CommandInteraction): void => {
       'IEEE support',
       'https://www.ieee.org/about/contact.html',
     )}.`,
+    ephemeral: true,
   });
 };
