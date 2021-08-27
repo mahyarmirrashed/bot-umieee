@@ -10,7 +10,6 @@ const NominationSchema = new Schema<Nomination>(
         nominator: { type: String, required: true },
         nominee: { type: String, required: true },
         reason: { type: String, required: true },
-        unique: true,
       },
     ],
     message: { type: String, unique: true },
