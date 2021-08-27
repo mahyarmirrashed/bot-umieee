@@ -1,76 +1,94 @@
-import _ from 'discord-emoji';
-import { GuildChannel, Message, TextChannel } from 'discord.js';
+import { bold, userMention } from '@discordjs/builders';
+import { food } from 'discord-emoji';
+import { Guild, Message, MessageEmbed, TextChannel } from 'discord.js';
 import moment from 'moment';
+import { Document, CallbackError } from 'mongoose';
 import Bot from '../../client/Client';
 import NominationModel from '../../models/NominationModel';
-import Nomination from '../../types/NominationType';
+import { Nomination } from '../../types/NominationType';
 
-const emojis = _;
 const JAPANESE_FOOD_IDX = 70;
 
-const addVote = async (client: Bot): Promise<void> => {
-	// get stringified date for previous, previous Monday
-	const week: string = moment().day(-6).toISOString(true).split('T')[0];
+const addVote = (client: Bot, guild: Guild, cotwChannel: TextChannel): void => {
+  // stringified date for previous, previous Monday
+  const week = moment().day(-6).toISOString(true).split('T')[0];
 
-	// check if entry exists for this week
-	const res: Nomination = (await NominationModel.findOne({
-		week: week,
-		'nominations.0': { $exists: true },
-	}).exec()) as Nomination;
+  NominationModel.findOne({
+    guildID: guild.id,
+    week,
+    'nominations.0': { $exists: true },
+  })
+    .exec()
+    .then(
+      async (
+        res: (Document<unknown, unknown, Nomination> & Nomination) | null,
+      ) => {
+        if (res) {
+          // extract Japanese food emojis from emoji dataset
+          const foodEmojis = [
+            ...new Set(Object.values(food).slice(JAPANESE_FOOD_IDX)),
+          ].slice(0, res.nominations.length);
 
-	if (res && client.guild) {
-		// find 'cotw' channel
-		const channel: TextChannel = client.guild.channels.cache.find(
-			(channel: GuildChannel) =>
-				channel.name === 'cotw' && channel instanceof TextChannel,
-		) as TextChannel;
+          // send voting message
+          cotwChannel
+            .send({
+              embeds: [
+                new MessageEmbed({
+                  description: [
+                    `${bold(
+                      `COTW Vote: [${week}]`,
+                    )}\nPlease vote for this week's COTW by reacting with a corresponding emoji:\n`,
+                    res.nominations
+                      .map(
+                        (
+                          {
+                            nominee,
+                            reason,
+                          }: { nominee: string; reason: string },
+                          i: number,
+                        ) =>
+                          `${foodEmojis[i]} : ${userMention(
+                            nominee,
+                          )} for "${reason}".`,
+                      )
+                      .join('\n'),
+                  ].join('\n'),
+                }),
+              ],
+            })
+            .then((voteMessage: Message) => {
+              // react with emojis
+              foodEmojis.forEach((foodEmoji: string) =>
+                voteMessage.react(foodEmoji),
+              );
 
-		if (channel) {
-			// extract Japanese food emojis from emoji dataset
-			const foodEmojis = [
-				...new Set(Object.values(emojis.food).slice(JAPANESE_FOOD_IDX)),
-			];
-
-			// send embedded voting message
-			const message: void | Message = await client.sendEmbed(channel, {
-				description: [
-					`**COTW Vote: [${week}]**\nPlease vote for this week's COTW by reacting with a corresponding emoji:`,
-					'',
-					res.nominations
-						.map(
-							(
-								{ nominee, reason }: { nominee: string; reason: string },
-								i: number,
-							) => `${foodEmojis[i]} : <@${nominee}> for "${reason}".`,
-						)
-						.join('\n'),
-				].join('\n'),
-			});
-
-			// embedded message successfully sent
-			if (message) {
-				// react with available emojis
-				foodEmojis
-					.slice(0, res.nominations.length)
-					.forEach((foodEmoji: string) => message.react(foodEmoji));
-				// save sent message Snowflake (ID)
-				NominationModel.updateOne(
-					{ week: week },
-					{ message: message.id },
-					{},
-					(e: unknown) => {
-						if (e) {
-							client.logger.error(e);
-						} else {
-							// log database update
-							client.logger.success('Successfully updated nomination:');
-							client.logger.info(`message: ${message.id}`);
-						}
-					},
-				);
-			}
-		}
-	}
+              // keep track of message Snowflake for removal
+              NominationModel.updateOne(
+                {
+                  guildID: guild.id,
+                  week,
+                },
+                {
+                  message: voteMessage.id,
+                },
+                {},
+                (e: CallbackError) => {
+                  if (e) {
+                    // error occurred during upsertion
+                    client.logger.error(e);
+                  } else {
+                    // log database update
+                    client.logger.success('Sucessfully updated nomination:');
+                    client.logger.info(`guildID: ${guild.id}`);
+                    client.logger.info(`messageID: ${voteMessage.id}`);
+                  }
+                },
+              );
+            })
+            .catch(client.logger.error);
+        }
+      },
+    );
 };
 
 export default addVote;

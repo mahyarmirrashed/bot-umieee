@@ -1,22 +1,17 @@
-import { GuildMember, Role } from 'discord.js';
+import { GuildMember, Constants } from 'discord.js';
 import Bot from '../../client/Client';
-import RunFunction from '../../interfaces/RunFunctionStorage';
+import findOrCreateInactiveRole from '../../helpers/guild/FindOrCreateInactiveRole';
+import Handler from '../../interfaces/HandlerStorage';
 
-export const run: RunFunction = async (
-	client: Bot,
-	guildMember: GuildMember,
+export const handler: Handler<GuildMember> = async (
+  client: Bot,
+  guildMember: GuildMember,
 ): Promise<void> => {
-	client.logger.info(`${guildMember.id} joined the channel!`);
-	// assign guild member inactive role upon re-entry
-	if (client.guild && !guildMember.user.bot) {
-		guildMember.roles
-			.add(
-				client.guild.roles.cache.find(
-					(role: Role) => role.name.toLowerCase() === 'inactive',
-				) as Role,
-			)
-			.catch((e: unknown) => client.logger.error(e));
-	}
+  if (!guildMember.user.bot) {
+    guildMember.roles
+      .add(await findOrCreateInactiveRole(guildMember.guild))
+      .catch(client.logger.error);
+  }
 };
 
-export const name = 'guildMemberAdd';
+export const name = Constants.Events.GUILD_MEMBER_ADD;

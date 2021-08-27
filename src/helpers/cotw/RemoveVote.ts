@@ -1,93 +1,133 @@
-import _ from 'discord-emoji';
+import { bold, userMention } from '@discordjs/builders';
+import { yellow } from 'chalk';
+import { food } from 'discord-emoji';
 import {
-	GuildChannel,
-	TextChannel,
-	Message,
-	MessageReaction,
+  Guild,
+  MessageEmbed,
+  MessageReaction,
+  Snowflake,
+  TextChannel,
 } from 'discord.js';
 import moment from 'moment';
+import { Document, CallbackError } from 'mongoose';
 import Bot from '../../client/Client';
 import ChumpModel from '../../models/ChumpModel';
 import NominationModel from '../../models/NominationModel';
-import Nomination from '../../types/NominationType';
+import { Nomination } from '../../types/NominationType';
 
-const emojis = _;
 const JAPANESE_FOOD_IDX = 70;
 
-const removeVote = async (client: Bot): Promise<void> => {
-	// get stringified date for previous, previous, previous Monday
-	const week: string = moment().day(-13).toISOString(true).split('T')[0];
+const removeVote = (
+  client: Bot,
+  guild: Guild,
+  cotwChannel: TextChannel,
+): void => {
+  // stringified date for previous, previous, previous Monday
+  const week = moment().day(-13).toISOString(true).split('T')[0];
 
-	// check if entry exists for this week
-	const res: Nomination = (await NominationModel.findOne({
-		week: week,
-		'nominations.0': { $exists: true },
-	}).exec()) as Nomination;
+  // check for existing entries for current week
+  NominationModel.findOne({
+    guildID: guild.id,
+    week,
+    'nominations.0': { $exists: true },
+  })
+    .exec()
+    .then(
+      async (
+        res: (Document<unknown, unknown, Nomination> & Nomination) | null,
+      ) => {
+        if (res) {
+          // extract Japanese food emojis from emoji dataset
+          const foodEmojis = [
+            ...new Set(Object.values(food).slice(JAPANESE_FOOD_IDX)),
+          ];
 
-	if (res && client.guild) {
-		// find 'cotw' channel
-		const channel: TextChannel = client.guild.channels.cache.find(
-			(channel: GuildChannel) =>
-				channel.name === 'cotw' && channel instanceof TextChannel,
-		) as TextChannel;
+          // fetch vote message from channel
+          const voteMessage = await cotwChannel.messages.fetch(res.message);
 
-		if (channel) {
-			// extract Japanese food emojis from emoji dataset
-			const foodEmojis = [
-				...new Set(Object.values(emojis.food).slice(JAPANESE_FOOD_IDX)),
-			];
-			// fetch message from channel
-			const message: Message = (await channel.messages.fetch(
-				res.message,
-			)) as Message;
-			// keep track of chumps
-			const chumps: Set<string> = new Set<string>();
+          if (voteMessage) {
+            // calculate most voted reactions
+            const mostReactions = Math.max(
+              ...voteMessage.reactions.cache.map(
+                (reaction: MessageReaction) => reaction.count,
+              ),
+            );
 
-			// calculate most voted reactions
-			const maximum: number = Math.max(
-				...message.reactions.cache.map(
-					(reaction: MessageReaction) => reaction.count as number,
-				),
-			);
+            // all unique chumps this week
+            const chumps = new Set<Snowflake>(
+              voteMessage.reactions.cache
+                .filter(
+                  (reaction: MessageReaction) =>
+                    reaction.count === mostReactions,
+                )
+                .map(
+                  (reaction: MessageReaction) =>
+                    res.nominations[
+                      foodEmojis.indexOf(reaction.emoji.toString())
+                    ].nominee as Snowflake,
+                ),
+            );
 
-			message.reactions.cache
-				.filter((reaction: MessageReaction) => reaction.count === maximum)
-				.forEach((reaction: MessageReaction) => {
-					// extract chump Snowflake
-					const chump: string =
-						res.nominations[foodEmojis.indexOf(reaction.emoji.toString())]
-							.nominee;
-					// add chump Snowflake to set
-					chumps.add(chump);
+            // load chumps into database
+            chumps.forEach((chump: Snowflake) => {
+              ChumpModel.updateOne(
+                {
+                  guildID: guild.id,
+                  week,
+                },
+                {
+                  $addToSet: { chumps: chump },
+                },
+                {
+                  upsert: true,
+                },
+                (e: CallbackError) => {
+                  if (e) {
+                    // error occurred during upsertion
+                    client.logger.error(e);
+                  } else {
+                    // log database insertion
+                    client.logger.success('Successfully added chump:');
+                    client.logger.info(`guild: ${guild.id}`);
+                    client.logger.info(`week: ${week}`);
+                    client.logger.info(`chump: ${chump}`);
+                  }
+                },
+              );
+            });
 
-					// update chump into database
-					ChumpModel.updateOne(
-						{ week: week },
-						{ $addToSet: { chumps: chump } },
-						{ upsert: true },
-						(e: unknown) => {
-							if (e) {
-								client.logger.error(e);
-							} else {
-								// log database addition
-								client.logger.success('Successfully added chump to set:');
-								client.logger.info(`chump: ${chump}`);
-							}
-						},
-					);
-				});
-
-			client.sendEmbed(channel, {
-				description: [
-					`**COTW Vote Results: [${week}]**\n\nThis week's chump is/are:`,
-					'',
-					Array.from(chumps)
-						.map((chump: string) => `<@${chump}>`)
-						.join('\n'),
-				].join('\n'),
-			});
-		}
-	}
+            // report chump results
+            cotwChannel.send({
+              embeds: [
+                new MessageEmbed({
+                  description:
+                    chumps.size > 1
+                      ? [
+                          `${bold(
+                            `COTW Vote Results: [${week}]`,
+                          )}\n\nThis week's chump is/are:\n`,
+                          Array.from(chumps)
+                            .map((chump: string) => `${userMention(chump)}`)
+                            .join('\n'),
+                        ].join('\n')
+                      : `${bold(
+                          `COTW Vote Results: [${week}]`,
+                        )}\n\nThis week's chump is ${userMention(
+                          Array.from(chumps)[0],
+                        )}`,
+                }),
+              ],
+            });
+          } else {
+            client.logger.error(
+              `Expected message ${yellow(res.message)} did not exist in ${
+                guild.name
+              } (${guild.id}).`,
+            );
+          }
+        }
+      },
+    );
 };
 
 export default removeVote;

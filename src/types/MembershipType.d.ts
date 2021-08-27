@@ -1,8 +1,9 @@
 import { Snowflake } from 'discord.js';
 
 type Membership = {
-	discordID: Snowflake;
-	ieeeID: string;
+  guildID: Snowflake;
+  userID: Snowflake;
+  ieeeID: number;
 };
 
 export default Membership;

@@ -1,8 +1,9 @@
-import { Snowflake } from 'discord.js';
+import { Snowflake } from 'discord-api-types';
 
 type Chump = {
-	week: string;
-	chumps: Snowflake[];
+  guildID: Snowflake;
+  week: string;
+  chumps: readonly Snowflake[];
 };
 
 export default Chump;
