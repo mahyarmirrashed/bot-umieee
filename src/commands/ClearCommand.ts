@@ -67,7 +67,5 @@ export const handle = (_client: Bot, interaction: CommandInteraction): void => {
       content: 'Must delete at least one message.',
       ephemeral: true,
     });
-    // delete interaction reply after allowing 3 seconds to read
-    setTimeout(() => interaction.deleteReply(), 3000);
   }
 };
