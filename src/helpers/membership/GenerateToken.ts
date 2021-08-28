@@ -8,8 +8,8 @@ const generateToken = async (): Promise<string> =>
       'https://services13.ieee.org/RST/api/oauth/token',
       new URLSearchParams({
         grant_type: 'client_credentials',
-        client_id: process.env.VALIDATOR_CLIENT_ID as string,
-        client_secret: process.env.VALIDATOR_SECRET as string,
+        client_id: process.env.MEMBERSHIP_VALIDATOR_CLIENT_ID as string,
+        client_secret: process.env.MEMBERSHIP_VALIDATOR_CLIENT_SECRET as string,
         scope: 'GetMemberStatus',
       }),
     )
