@@ -16,6 +16,10 @@
   ],
   "author": "Mahyar Mirrashed",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mahyarmirrashed/bot-umieee",
+    "email": "ieee@umes.mb.ca"
+  },
   "devDependencies": {
     "@types/cron": "^1.7.3",
     "@types/glob": "^7.1.4",
