@@ -7,7 +7,7 @@ import Handler from '../../interfaces/HandlerStorage';
 
 export const cronJobFrequency = '0 0 * * MON';
 
-export const handler: Handler = async (client: Bot): Promise<void> => {
+export const handler: Handler<never> = async (client: Bot): Promise<void> => {
   // perform for all guilds
   client.guilds.cache.forEach(async (guild: Guild) => {
     const cotwChannel = await findOrCreateCotwChannel(guild);

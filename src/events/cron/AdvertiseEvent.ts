@@ -21,7 +21,7 @@ const MAPPINGS = Object.assign(Object.create(null), {
 // cron job metadata
 export const cronJobFrequency = '0 0 * * MON';
 
-export const handler: Handler = async (client: Bot): Promise<void> => {
+export const handler: Handler<never> = async (client: Bot): Promise<void> => {
   axios
     .get(
       // fetch all upcoming events

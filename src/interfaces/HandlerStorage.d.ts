@@ -1,5 +1,5 @@
 import Bot from '../client/Client';
 
-export default interface Handler<T = Record<string, never>> {
-  (client: Bot, args: T = null): Promise<void>;
+export default interface Handler<T> {
+  (client: Bot, args: T): Promise<void>;
 }
