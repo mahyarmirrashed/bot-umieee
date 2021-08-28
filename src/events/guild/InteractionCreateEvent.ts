@@ -50,6 +50,9 @@ export const handler: Handler<Interaction> = async (
               command.channelsWhitelisted.map(
                 (channelWhitelisted: string) => `\`${channelWhitelisted}\``,
               ),
+              {
+                type: 'disjunction',
+              },
             )}.`,
             ephemeral: true,
           });
