@@ -47,6 +47,4 @@ export const handle = (client: Bot, interaction: CommandInteraction): void => {
       ephemeral: true,
     });
   }
-
-  client.logger.info(`${interaction.commandName} worked!`);
 };
