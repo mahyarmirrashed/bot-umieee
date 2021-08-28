@@ -9,7 +9,7 @@ import Membership from '../../types/MembershipType';
 // cron job metadata
 export const cronJobFrequency = '0 0 * * *';
 
-export const handler: Handler<never> = async (client: Bot): Promise<void> => {
+export const handler: Handler<unknown> = async (client: Bot): Promise<void> => {
   generateToken().then(async (token: string) => {
     ((await MembershipModel.find({}).exec()) as Membership[]).forEach(
       async (membership: Membership) => {

@@ -4,7 +4,7 @@ import { Constants } from 'discord.js';
 import Bot from '../../client/Client';
 import Handler from '../../interfaces/HandlerStorage';
 
-export const handler: Handler<never> = async (client: Bot): Promise<void> => {
+export const handler: Handler<unknown> = async (client: Bot): Promise<void> => {
   if (client.user) {
     // report successful login
     client.logger.success('Successfully logged in!');
