@@ -35,7 +35,7 @@ export const json: SlashCommandJSON = new SlashCommandBuilder()
 export const handle = (_client: Bot, interaction: CommandInteraction): void => {
   // default to 99 messages
   // cap count at 99 messages (maximum value)
-  const count = Math.min(interaction.options.getInteger('count') || 99, 99);
+  const count = Math.min(interaction.options.getInteger('count') ?? 99, 99);
 
   if (count > 0) {
     // delete messages from channel
