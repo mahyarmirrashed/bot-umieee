@@ -68,6 +68,7 @@ export const handle = async (
         addNomination(
           client,
           interaction,
+          interaction.guild.id,
           interaction.user.id,
           user.id,
           reason,

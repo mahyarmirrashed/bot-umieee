@@ -12,6 +12,7 @@ const MAXIMUM_NOMINATIONS = 20;
 const addNomination = (
   client: Bot,
   interaction: CommandInteraction,
+  guildID: string,
   nominator: string,
   nominee: string,
   reason: string,
@@ -21,6 +22,7 @@ const addNomination = (
 
   // check for existing entries for current week
   NominationModel.findOne({
+    guildID,
     week,
     $or: [
       {
@@ -58,6 +60,7 @@ const addNomination = (
           // attempt to upsert nomination into database
           NominationModel.updateOne(
             {
+              guildID,
               week,
             },
             {
