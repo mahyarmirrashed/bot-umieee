@@ -1,5 +1,4 @@
 import {
-  roleMention,
   SlashCommandBuilder,
   SlashCommandStringOption,
   SlashCommandUserOption,
