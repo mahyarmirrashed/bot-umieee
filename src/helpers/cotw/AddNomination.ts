@@ -1,4 +1,4 @@
-import { userMention } from '@discordjs/builders';
+import { inlineCode, userMention } from '@discordjs/builders';
 import { magenta } from 'chalk';
 import { CommandInteraction } from 'discord.js';
 import { Document, CallbackError } from 'mongoose';
@@ -86,7 +86,7 @@ const addNomination = (
                 interaction.reply(
                   `${userMention(nominator)} nominated ${userMention(
                     nominee,
-                  )} as this week's chump because: ${reason}`,
+                  )} as this week's chump.\nReason: ${inlineCode(reason)}.`,
                 );
                 // log database upsertion
                 client.logger.success('Successfully upserted new nomination:');
