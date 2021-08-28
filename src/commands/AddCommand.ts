@@ -64,9 +64,13 @@ export const handle = (client: Bot, interaction: CommandInteraction): void => {
       // continue with steps to modify member role
       .then(() => generateToken())
       .then((token: string) => validateMember(token, ieeeID))
-      .then((valid: boolean) => {
+      .then(async (valid: boolean) => {
         if (interaction.guild && interaction.member instanceof GuildMember) {
-          modifyMember(interaction.guild, interaction.member, valid);
+          modifyMember(
+            interaction.guild,
+            await interaction.guild.members.fetch(user),
+            valid,
+          );
         }
       })
       .catch(client.logger.error);

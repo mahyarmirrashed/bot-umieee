@@ -11,7 +11,6 @@ const modifyMember = async (
 
   // adjust member role as necessary
   if (valid) {
-    // TODO: fix issue with role adding
     await member.roles.remove(inactiveRole);
   } else {
     await member.roles.add(inactiveRole);
