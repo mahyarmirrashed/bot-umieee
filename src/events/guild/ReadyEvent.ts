@@ -1,3 +1,4 @@
+import { yellow } from 'chalk';
 import { ActivityType, PresenceUpdateStatus } from 'discord-api-types/v9';
 import { Constants } from 'discord.js';
 import Bot from '../../client/Client';
@@ -14,7 +15,11 @@ export const handler: Handler<never> = async (client: Bot): Promise<void> => {
       activities: [{ name: '/help', type: ActivityType.Game }],
     });
   } else {
-    client.logger.error('`user` property on `client` was `null`...');
+    client.logger.error(
+      `${yellow('user')} property on ${yellow('client')} was ${yellow(
+        'null',
+      )}...`,
+    );
   }
 };
 
