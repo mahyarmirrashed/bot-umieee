@@ -11,7 +11,6 @@ import {
 } from 'discord.js';
 import Bot from '../client/Client';
 import addNomination from '../helpers/cotw/AddNomination';
-import findOrCreateActiveRole from '../helpers/guild/FindOrCreateActiveRole';
 import findOrCreateInactiveRole from '../helpers/guild/FindOrCreateInactiveRole';
 import SlashCommandJSON from '../types/SlashCommandJSONType';
 
@@ -55,16 +54,12 @@ export const handle = async (
       interaction.member &&
       interaction.member instanceof GuildMember
     ) {
-      const activeRole = await findOrCreateActiveRole(interaction.guild);
       const inactiveRole = await findOrCreateInactiveRole(interaction.guild);
       // find mentioned member on server
       const member = await interaction.guild.members.fetch(user);
 
       // only members
-      if (
-        member.roles.cache.has(activeRole.id) ||
-        member.roles.cache.has(inactiveRole.id)
-      ) {
+      if (!user.bot && !member.roles.cache.has(inactiveRole.id)) {
         addNomination(
           client,
           interaction,
@@ -75,11 +70,8 @@ export const handle = async (
         );
       } else {
         interaction.reply({
-          content: `Only members with the ${roleMention(
-            activeRole.id,
-          )} or the ${roleMention(
-            inactiveRole.id,
-          )} can be nominated as potential chumps.`,
+          content:
+            'You cannot nominate this user because of one or more of their roles.',
           ephemeral: true,
         });
       }
