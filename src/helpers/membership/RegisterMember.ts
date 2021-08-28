@@ -1,4 +1,4 @@
-import { userMention } from '@discordjs/builders';
+import { inlineCode, userMention } from '@discordjs/builders';
 import { magenta } from 'chalk';
 import { CommandInteraction, Snowflake } from 'discord.js';
 import { CallbackError, Document } from 'mongoose';
@@ -24,11 +24,12 @@ const registerMember = async (
       (res: (Document<unknown, unknown, Membership> & Membership) | null) => {
         if (res) {
           // user in database already assigned particular IEEE membership number
-          interaction.reply({
+          interaction.editReply({
             content: `${userMention(
               res.userID,
-            )} is already assigned ${ieeeID} inside this guild!`,
-            ephemeral: true,
+            )} is already assigned the IEEE memberhip number, ${inlineCode(
+              String(ieeeID),
+            )}, inside this guild!`,
           });
         } else {
           // attempt to upsert member into database
@@ -50,13 +51,12 @@ const registerMember = async (
                 // error occurred during upsertion
                 client.logger.error(e);
                 // report unsuccessful upsertion
-                interaction.reply({
+                interaction.editReply({
                   content: 'Error occurred when upserting member.',
-                  ephemeral: true,
                 });
               } else {
                 // report successful upsertion
-                interaction.reply(
+                interaction.editReply(
                   `Successfully assigned ${userMention(
                     userID,
                   )} IEEE membership number ${ieeeID}.`,
