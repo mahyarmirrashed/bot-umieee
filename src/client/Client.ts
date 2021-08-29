@@ -103,15 +103,9 @@ export default class Bot extends Client {
           // report slash commands to Discord API
           new REST({ version: '9' })
             .setToken(process.env.DISCORD_TOKEN as string)
-            .put(
-              Routes.applicationGuildCommands(
-                process.env.CLIENT_ID as string,
-                process.env.GUILD_ID as string,
-              ),
-              {
-                body: slashCommands,
-              },
-            )
+            .put(Routes.applicationCommands(process.env.CLIENT_ID as string), {
+              body: slashCommands,
+            })
             .then(() =>
               this.logger.success(
                 'Successfully registered all application commands!',
