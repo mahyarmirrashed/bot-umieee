@@ -58,5 +58,11 @@
     "mongoose": "^6.0.1",
     "turndown": "^7.1.1"
   },
-  "private": true
+  "private": true,
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx}": [
+      "yarn lint",
+      "yarn format"
+    ]
+  }
 }
