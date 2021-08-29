@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc --build tsconfig.json",
+    "commit": "commit",
     "dev": "ts-node-dev --respawn --transpile-only --poll ./src/index.ts",
     "format": "prettier --write .",
     "lint": "eslint src",
@@ -23,6 +24,8 @@
     "email": "ieee@umes.mb.ca"
   },
   "devDependencies": {
+    "@commitlint/cli": "^13.1.0",
+    "@commitlint/config-conventional": "^13.1.0",
     "@types/cron": "^1.7.3",
     "@types/glob": "^7.1.4",
     "@types/node": "^16.7.1",
