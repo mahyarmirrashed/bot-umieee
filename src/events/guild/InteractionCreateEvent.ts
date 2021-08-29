@@ -1,5 +1,5 @@
 import { createIntl } from '@formatjs/intl';
-import { GuildChannel, Interaction, Permissions } from 'discord.js';
+import { Constants, GuildChannel, Interaction, Permissions } from 'discord.js';
 import Bot from '../../client/Client';
 import Handler from '../../interfaces/HandlerStorage';
 
@@ -68,4 +68,4 @@ export const handler: Handler<Interaction> = async (
   }
 };
 
-export const name = 'interactionCreate';
+export const name = Constants.Events.INTERACTION_CREATE;
