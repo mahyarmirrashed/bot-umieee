@@ -9,7 +9,7 @@ import {
   TextChannel,
 } from 'discord.js';
 import moment from 'moment';
-import { Document, CallbackError } from 'mongoose';
+import { CallbackError } from 'mongoose';
 import Bot from '../../client/Client';
 import ChumpModel from '../../models/ChumpModel';
 import NominationModel from '../../models/NominationModel';
@@ -32,102 +32,96 @@ const removeVote = (
     'nominations.0': { $exists: true },
   })
     .exec()
-    .then(
-      async (
-        res: (Document<unknown, unknown, Nomination> & Nomination) | null,
-      ) => {
-        if (res) {
-          // extract Japanese food emojis from emoji dataset
-          const foodEmojis = [
-            ...new Set(Object.values(food).slice(JAPANESE_FOOD_IDX)),
-          ];
+    .then(async (res: Nomination | null) => {
+      if (res) {
+        // extract Japanese food emojis from emoji dataset
+        const foodEmojis = [
+          ...new Set(Object.values(food).slice(JAPANESE_FOOD_IDX)),
+        ];
 
-          // fetch vote message from channel
-          const voteMessage = await cotwChannel.messages.fetch(res.message);
+        // fetch vote message from channel
+        const voteMessage = await cotwChannel.messages.fetch(res.message);
 
-          if (voteMessage) {
-            // calculate most voted reactions
-            const mostReactions = Math.max(
-              ...voteMessage.reactions.cache.map(
-                (reaction: MessageReaction) => reaction.count,
+        if (voteMessage) {
+          // calculate most voted reactions
+          const mostReactions = Math.max(
+            ...voteMessage.reactions.cache.map(
+              (reaction: MessageReaction) => reaction.count,
+            ),
+          );
+
+          // all unique chumps this week
+          const chumps = new Set<Snowflake>(
+            voteMessage.reactions.cache
+              .filter(
+                (reaction: MessageReaction) => reaction.count === mostReactions,
+              )
+              .map(
+                (reaction: MessageReaction) =>
+                  res.nominations[foodEmojis.indexOf(reaction.emoji.toString())]
+                    .nominee as Snowflake,
               ),
+          );
+
+          // load chumps into database
+          chumps.forEach((chump: Snowflake) => {
+            ChumpModel.updateOne(
+              {
+                guildID: guild.id,
+                week,
+              },
+              {
+                $addToSet: { chumps: chump },
+              },
+              {
+                upsert: true,
+              },
+              (e: CallbackError) => {
+                if (e) {
+                  // error occurred during upsertion
+                  client.logger.error(e);
+                } else {
+                  // log database insertion
+                  client.logger.success('Successfully added chump:');
+                  client.logger.info(`guild: ${guild.id}`);
+                  client.logger.info(`week: ${week}`);
+                  client.logger.info(`chump: ${chump}`);
+                }
+              },
             );
+          });
 
-            // all unique chumps this week
-            const chumps = new Set<Snowflake>(
-              voteMessage.reactions.cache
-                .filter(
-                  (reaction: MessageReaction) =>
-                    reaction.count === mostReactions,
-                )
-                .map(
-                  (reaction: MessageReaction) =>
-                    res.nominations[
-                      foodEmojis.indexOf(reaction.emoji.toString())
-                    ].nominee as Snowflake,
-                ),
-            );
-
-            // load chumps into database
-            chumps.forEach((chump: Snowflake) => {
-              ChumpModel.updateOne(
-                {
-                  guildID: guild.id,
-                  week,
-                },
-                {
-                  $addToSet: { chumps: chump },
-                },
-                {
-                  upsert: true,
-                },
-                (e: CallbackError) => {
-                  if (e) {
-                    // error occurred during upsertion
-                    client.logger.error(e);
-                  } else {
-                    // log database insertion
-                    client.logger.success('Successfully added chump:');
-                    client.logger.info(`guild: ${guild.id}`);
-                    client.logger.info(`week: ${week}`);
-                    client.logger.info(`chump: ${chump}`);
-                  }
-                },
-              );
-            });
-
-            // report chump results
-            cotwChannel.send({
-              embeds: [
-                new MessageEmbed({
-                  description:
-                    chumps.size > 1
-                      ? [
-                          `${bold(
-                            `COTW Vote Results: [${week}]`,
-                          )}\n\nThis week's chump is/are:\n`,
-                          Array.from(chumps)
-                            .map((chump: string) => `${userMention(chump)}`)
-                            .join('\n'),
-                        ].join('\n')
-                      : `${bold(
+          // report chump results
+          cotwChannel.send({
+            embeds: [
+              new MessageEmbed({
+                description:
+                  chumps.size > 1
+                    ? [
+                        `${bold(
                           `COTW Vote Results: [${week}]`,
-                        )}\n\nThis week's chump is ${userMention(
-                          Array.from(chumps)[0],
-                        )}`,
-                }),
-              ],
-            });
-          } else {
-            client.logger.error(
-              `Expected message ${yellow(res.message)} did not exist in ${
-                guild.name
-              } (${guild.id}).`,
-            );
-          }
+                        )}\n\nThis week's chump is/are:\n`,
+                        Array.from(chumps)
+                          .map((chump: string) => `${userMention(chump)}`)
+                          .join('\n'),
+                      ].join('\n')
+                    : `${bold(
+                        `COTW Vote Results: [${week}]`,
+                      )}\n\nThis week's chump is ${userMention(
+                        Array.from(chumps)[0],
+                      )}`,
+              }),
+            ],
+          });
+        } else {
+          client.logger.error(
+            `Expected message ${yellow(res.message)} did not exist in ${
+              guild.name
+            } (${guild.id}).`,
+          );
         }
-      },
-    );
+      }
+    });
 };
 
 export default removeVote;
