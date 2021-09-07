@@ -3,13 +3,13 @@ import {
   SlashCommandIntegerOption,
   SlashCommandUserOption,
 } from '@discordjs/builders';
+import { RESTPostAPIApplicationCommandsJSONBody } from 'discord-api-types/v9';
 import { CommandInteraction, Permissions, GuildMember } from 'discord.js';
 import Bot from '../client/Client';
 import generateToken from '../helpers/membership/GenerateToken';
 import modifyMember from '../helpers/membership/ModifyMember';
 import registerMember from '../helpers/membership/RegisterMember';
 import validateMember from '../helpers/membership/ValidateMember';
-import SlashCommandJSON from '../types/SlashCommandJSONType';
 
 const MINIMUM_IEEE_ID = 10_000_000;
 
@@ -19,25 +19,26 @@ export const channelsWhitelisted = ['bots'];
 export const neededPermissions = [Permissions.FLAGS.MANAGE_GUILD];
 
 // export slash command usage
-export const json: SlashCommandJSON = new SlashCommandBuilder()
-  .setName('add')
-  .setDescription('Activate a new IEEE member on the server.')
-  .setDefaultPermission(true)
-  .addUserOption((option: SlashCommandUserOption) =>
-    option
-      .setName('user')
-      .setDescription(
-        'Mention user to associate with the IEEE membership number.',
-      )
-      .setRequired(true),
-  )
-  .addIntegerOption((option: SlashCommandIntegerOption) =>
-    option
-      .setName('ieee_number')
-      .setDescription('IEEE membership number to associate with user.')
-      .setRequired(true),
-  )
-  .toJSON();
+export const json: RESTPostAPIApplicationCommandsJSONBody =
+  new SlashCommandBuilder()
+    .setName('add')
+    .setDescription('Activate a new IEEE member on the server.')
+    .setDefaultPermission(true)
+    .addUserOption((option: SlashCommandUserOption) =>
+      option
+        .setName('user')
+        .setDescription(
+          'Mention user to associate with the IEEE membership number.',
+        )
+        .setRequired(true),
+    )
+    .addIntegerOption((option: SlashCommandIntegerOption) =>
+      option
+        .setName('ieee_number')
+        .setDescription('IEEE membership number to associate with user.')
+        .setRequired(true),
+    )
+    .toJSON();
 
 // export slash command handler
 export const handle = (client: Bot, interaction: CommandInteraction): void => {

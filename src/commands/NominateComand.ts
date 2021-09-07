@@ -3,6 +3,7 @@ import {
   SlashCommandStringOption,
   SlashCommandUserOption,
 } from '@discordjs/builders';
+import { RESTPostAPIApplicationCommandsJSONBody } from 'discord-api-types/v9';
 import {
   PermissionResolvable,
   CommandInteraction,
@@ -11,7 +12,6 @@ import {
 import Bot from '../client/Client';
 import addNomination from '../helpers/cotw/AddNomination';
 import findOrCreateInactiveRole from '../helpers/guild/FindOrCreateInactiveRole';
-import SlashCommandJSON from '../types/SlashCommandJSONType';
 
 const MAXIMUM_REASON_LENGTH = 50;
 
@@ -21,23 +21,24 @@ export const channelsWhitelisted = ['cotw'];
 export const neededPermissions = Array<PermissionResolvable>();
 
 // export slash command usage
-export const json: SlashCommandJSON = new SlashCommandBuilder()
-  .setName('nominate')
-  .setDescription('Nominate someone as chump-of-the-week.')
-  .setDefaultPermission(true)
-  .addUserOption((option: SlashCommandUserOption) =>
-    option
-      .setName('user')
-      .setDescription('User to nominate as chump-of-the-week.')
-      .setRequired(true),
-  )
-  .addStringOption((option: SlashCommandStringOption) =>
-    option
-      .setName('reason')
-      .setDescription('Reason for nominating this chump.')
-      .setRequired(true),
-  )
-  .toJSON();
+export const json: RESTPostAPIApplicationCommandsJSONBody =
+  new SlashCommandBuilder()
+    .setName('nominate')
+    .setDescription('Nominate someone as chump-of-the-week.')
+    .setDefaultPermission(true)
+    .addUserOption((option: SlashCommandUserOption) =>
+      option
+        .setName('user')
+        .setDescription('User to nominate as chump-of-the-week.')
+        .setRequired(true),
+    )
+    .addStringOption((option: SlashCommandStringOption) =>
+      option
+        .setName('reason')
+        .setDescription('Reason for nominating this chump.')
+        .setRequired(true),
+    )
+    .toJSON();
 
 // export slash command handler
 export const handle = async (

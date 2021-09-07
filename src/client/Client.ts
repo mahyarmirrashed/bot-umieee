@@ -2,7 +2,10 @@ import { REST } from '@discordjs/rest';
 import { cyan } from 'chalk';
 import consola from 'consola';
 import { CronJob } from 'cron';
-import { Routes } from 'discord-api-types/v9';
+import {
+  RESTPostAPIApplicationCommandsJSONBody,
+  Routes,
+} from 'discord-api-types/v9';
 import {
   LimitedCollection,
   Options,
@@ -15,7 +18,6 @@ import { connect } from 'mongoose';
 import { promisify } from 'util';
 import Command from '../interfaces/CommandStorage';
 import Event from '../interfaces/EventStorage';
-import SlashCommandJSON from '../types/SlashCommandJSONType';
 
 const globPromise = promisify(glob);
 
@@ -89,17 +91,21 @@ export default class Bot extends Client {
         // once all promises return their json, report to API
         Promise.all(
           commands.map(
-            async (commandPath: string): Promise<SlashCommandJSON> =>
-              import(commandPath).then((command: Command): SlashCommandJSON => {
-                this.logger.info(
-                  `Registering command ${cyan(command.json.name)}...`,
-                );
-                this.commands.set(command.json.name, command);
-                // return slash command's JSON for array construction
-                return command.json;
-              }),
+            async (
+              commandPath: string,
+            ): Promise<RESTPostAPIApplicationCommandsJSONBody> =>
+              import(commandPath).then(
+                (command: Command): RESTPostAPIApplicationCommandsJSONBody => {
+                  this.logger.info(
+                    `Registering command ${cyan(command.json.name)}...`,
+                  );
+                  this.commands.set(command.json.name, command);
+                  // return slash command's JSON for array construction
+                  return command.json;
+                },
+              ),
           ),
-        ).then((slashCommands: SlashCommandJSON[]) =>
+        ).then((slashCommands: RESTPostAPIApplicationCommandsJSONBody[]) =>
           // report slash commands to Discord API
           new REST({ version: '9' })
             .setToken(process.env.DISCORD_TOKEN as string)
