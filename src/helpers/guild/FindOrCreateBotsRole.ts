@@ -9,6 +9,7 @@ const findOrCreateBotsRole = async (guild: Guild): Promise<Role> =>
     permissions: [
       Permissions.FLAGS.VIEW_CHANNEL,
       Permissions.FLAGS.MANAGE_ROLES,
+      Permissions.FLAGS.KICK_MEMBERS,
       Permissions.FLAGS.SEND_MESSAGES,
       Permissions.FLAGS.EMBED_LINKS,
       Permissions.FLAGS.ADD_REACTIONS,

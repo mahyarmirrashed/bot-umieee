@@ -4,11 +4,11 @@ import Bot from '../../client/Client';
 import InactiveModel from '../../models/InactiveUserModel';
 import InactiveUser from '../../types/InactiveUserType';
 import dateDayDelta from '../DateDayDelta';
-import addInactiveUser from './AddInactiveUser';
-import removeInactiveUser from './RemoveInactiveUser';
+import addInactiveUserStatus from './AddInactiveUserStatus';
+import removeInactiveUserStatus from './RemoveInactiveUserStatus';
 
-// only inactive for three weeks
-const MAXIMUM_DAYS_INACTIVE = 21;
+// permit inactivity for one week
+const MAXIMUM_DAYS_INACTIVE = 7;
 
 const remindOrKickInactiveUser = (
   client: Bot,
@@ -29,7 +29,7 @@ const remindOrKickInactiveUser = (
             .kick('You were kicked being inactive for more than three weeks.')
             .catch(client.logger.error);
           // remove kicked user from database
-          removeInactiveUser(client, guild, member);
+          removeInactiveUserStatus(client, guild, member);
         } else {
           member.send(
             `${bold(
@@ -41,7 +41,7 @@ const remindOrKickInactiveUser = (
         }
       } else {
         // add inactive user to database
-        addInactiveUser(client, guild, member);
+        addInactiveUserStatus(client, guild, member);
         // report addition to database
         member.send(`${bold('Warning!')} Your UMIEEE membership has expired.`);
       }

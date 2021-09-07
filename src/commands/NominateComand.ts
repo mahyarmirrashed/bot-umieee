@@ -11,7 +11,7 @@ import {
 } from 'discord.js';
 import Bot from '../client/Client';
 import addNomination from '../helpers/cotw/AddNomination';
-import findOrCreateInactiveRole from '../helpers/guild/FindOrCreateInactiveRole';
+import findOrCreateActiveRole from '../helpers/guild/FindOrCreateActiveRole';
 
 const MAXIMUM_REASON_LENGTH = 50;
 
@@ -54,12 +54,12 @@ export const handle = async (
       interaction.member &&
       interaction.member instanceof GuildMember
     ) {
-      const inactiveRole = await findOrCreateInactiveRole(interaction.guild);
+      const activeRole = await findOrCreateActiveRole(interaction.guild);
       // find mentioned member on server
       const member = await interaction.guild.members.fetch(user);
 
       // only members
-      if (!user.bot && !member.roles.cache.has(inactiveRole.id)) {
+      if (!user.bot && member.roles.cache.has(activeRole.id)) {
         addNomination(
           client,
           interaction,
@@ -70,8 +70,7 @@ export const handle = async (
         );
       } else {
         interaction.reply({
-          content:
-            'You cannot nominate this user because of one or more of their roles.',
+          content: 'You cannot nominate this user.',
           ephemeral: true,
         });
       }

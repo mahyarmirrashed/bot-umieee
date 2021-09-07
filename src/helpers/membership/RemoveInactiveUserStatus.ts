@@ -3,24 +3,24 @@ import { Guild, GuildMember } from 'discord.js';
 import InactiveUserModel from '../../models/InactiveUserModel';
 import Bot from '../../client/Client';
 
-const addInactiveUser = (
+const removeInactiveUserStatus = (
   client: Bot,
   guild: Guild,
   member: GuildMember,
 ): void => {
-  InactiveUserModel.create(
+  InactiveUserModel.findOneAndDelete(
     {
       guildID: guild.id,
       userID: member.id,
-      since: Date.now(),
     },
+    {},
     (e: CallbackError) => {
       if (e) {
-        // error occurred during creation
+        // error occurred during deletion
         client.logger.error(e);
       }
     },
   );
 };
 
-export default addInactiveUser;
+export default removeInactiveUserStatus;

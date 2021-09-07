@@ -1,5 +1,6 @@
 import { Guild, GuildMember } from 'discord.js';
-import findOrCreateInactiveRole from '../guild/FindOrCreateInactiveRole';
+import findOrCreateActiveRole from '../guild/FindOrCreateActiveRole';
+import findOrCreateAlumniRole from '../guild/FindOrCreateAlumniRole';
 
 const modifyMember = async (
   guild: Guild,
@@ -7,13 +8,15 @@ const modifyMember = async (
   valid: boolean,
 ): Promise<void> => {
   // retrieve active and inactive role objects
-  const inactiveRole = await findOrCreateInactiveRole(guild);
+  const alumniRole = await findOrCreateAlumniRole(guild);
+  const activeRole = await findOrCreateActiveRole(guild);
 
   // adjust member role as necessary
-  if (valid) {
-    await member.roles.remove(inactiveRole);
+  if (valid && !member.roles.cache.has(alumniRole.id)) {
+    await member.roles.add(activeRole);
   } else {
-    await member.roles.add(inactiveRole);
+    // remove on alumnis too if assigned
+    await member.roles.remove(activeRole);
   }
 };
 

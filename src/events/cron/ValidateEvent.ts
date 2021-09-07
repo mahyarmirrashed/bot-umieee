@@ -1,10 +1,11 @@
 import { Guild, GuildMember } from 'discord.js';
 import Bot from '../../client/Client';
-import findOrCreateInactiveRole from '../../helpers/guild/FindOrCreateInactiveRole';
+import findOrCreateActiveRole from '../../helpers/guild/FindOrCreateActiveRole';
+import findOrCreateAlumniRole from '../../helpers/guild/FindOrCreateAlumniRole';
 import generateToken from '../../helpers/membership/GenerateToken';
 import modifyMember from '../../helpers/membership/ModifyMember';
 import remindOrKickInactiveMember from '../../helpers/membership/RemindOrKickInactiveUser';
-import removeInactiveUser from '../../helpers/membership/RemoveInactiveUser';
+import removeInactiveUserStatus from '../../helpers/membership/RemoveInactiveUserStatus';
 import validateMember from '../../helpers/membership/ValidateMember';
 import Handler from '../../interfaces/HandlerStorage';
 import MembershipModel from '../../models/MembershipModel';
@@ -34,13 +35,18 @@ export const handler: Handler<unknown> = async (client: Bot): Promise<void> => {
     })
     .then(() => {
       client.guilds.cache.forEach(async (guild: Guild) => {
-        const inactiveRole = await findOrCreateInactiveRole(guild);
+        const activeRole = await findOrCreateActiveRole(guild);
+        const alumniRole = await findOrCreateAlumniRole(guild);
+
         guild.members.cache.forEach((member: GuildMember) => {
-          if (member.roles.cache.has(inactiveRole.id)) {
-            remindOrKickInactiveMember(client, guild, member);
+          if (
+            member.roles.cache.has(activeRole.id) ||
+            member.roles.cache.has(alumniRole.id)
+          ) {
+            removeInactiveUserStatus(client, guild, member);
           } else {
             // potentially remove user from inactive user database
-            removeInactiveUser(client, guild, member);
+            remindOrKickInactiveMember(client, guild, member);
           }
         });
       });
