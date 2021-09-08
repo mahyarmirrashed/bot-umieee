@@ -1,6 +1,6 @@
 {
   "name": "bot-umieee",
-  "version": "2.2.3",
+  "version": "2.2.4",
   "description": "Bot for UMIEEE Discord server.",
   "main": "index.js",
   "scripts": {
