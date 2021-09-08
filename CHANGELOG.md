@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.2.2](https://github.com/mahyarmirrashed/bot-umieee/compare/v2.2.1...v2.2.2) (2021-09-08)
+
+
+### Bug Fixes
+
+* **guildmemberadd:** remove guild member add event ([32b7d7f](https://github.com/mahyarmirrashed/bot-umieee/commit/32b7d7f26848d4c4fb1141fc803e63ef3b7ec174))
+
 ### [2.2.1](https://github.com/mahyarmirrashed/bot-umieee/compare/v2.2.0...v2.2.1) (2021-09-08)
 
 ## [2.2.0](https://github.com/mahyarmirrashed/bot-umieee/compare/v2.1.0...v2.2.0) (2021-09-07)
