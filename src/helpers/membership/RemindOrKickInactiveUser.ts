@@ -8,7 +8,7 @@ import addInactiveUserStatus from './AddInactiveUserStatus';
 import removeInactiveUserStatus from './RemoveInactiveUserStatus';
 
 // permit inactivity for one week
-const MAXIMUM_DAYS_INACTIVE = 7;
+const MAXIMUM_DAYS_INACTIVE = 15;
 
 const remindOrKickInactiveUser = (
   client: Bot,
