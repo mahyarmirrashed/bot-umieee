@@ -5,7 +5,6 @@ import InactiveModel from '../../models/InactiveUserModel';
 import InactiveUser from '../../types/InactiveUserType';
 import dateDayDelta from '../DateDayDelta';
 import addInactiveUserStatus from './AddInactiveUserStatus';
-import removeInactiveUserStatus from './RemoveInactiveUserStatus';
 
 // permit inactivity for one week
 const MAXIMUM_DAYS_INACTIVE = 15;
@@ -28,8 +27,6 @@ const remindOrKickInactiveUser = (
           member
             .kick('You were kicked being inactive for more than three weeks.')
             .catch(client.logger.error);
-          // remove kicked user from database
-          removeInactiveUserStatus(client, guild, member);
         } else {
           member.send(
             `${bold(
