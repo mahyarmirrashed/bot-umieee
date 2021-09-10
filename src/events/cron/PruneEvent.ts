@@ -10,11 +10,12 @@ export const handler: Handler<unknown> = async (client: Bot): Promise<void> => {
   client.guilds.cache.each(async (guild: Guild) => {
     guild.members
       .prune({
-        days: 28,
+        dry: true,
+        days: 30,
         reason: 'Please rejoin when you are active on the server again.',
       })
       .then((pruneCount: number) =>
-        client.logger.info(`Pruned ${pruneCount} members on ${guild.id}`),
+        client.logger.info(`Pruned ${pruneCount} members from ${guild.id}`),
       );
   });
 };
