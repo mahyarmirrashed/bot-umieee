@@ -11,12 +11,16 @@ const modifyMember = async (
   const alumniRole = await findOrCreateAlumniRole(guild);
   const activeRole = await findOrCreateActiveRole(guild);
 
-  // adjust member role as necessary
-  if (valid && !member.roles.cache.has(alumniRole.id)) {
-    await member.roles.add(activeRole);
-  } else {
-    // remove on alumnis too if assigned
-    await member.roles.remove(activeRole);
+  // ensure member is still inside guild
+  await guild.members.fetch();
+  if (guild.members.cache.has(member.id)) {
+    // adjust member role as necessary
+    if (valid && !member.roles.cache.has(alumniRole.id)) {
+      await member.roles.add(activeRole);
+    } else {
+      // remove on alumnis too if assigned
+      await member.roles.remove(activeRole);
+    }
   }
 };
 
