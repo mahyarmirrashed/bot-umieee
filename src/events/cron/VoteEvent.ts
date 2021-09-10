@@ -9,6 +9,7 @@ export const cronJobFrequency = '0 0 * * MON';
 
 export const handler: Handler<unknown> = async (client: Bot): Promise<void> => {
   // perform for all guilds
+  await client.guilds.fetch();
   client.guilds.cache.forEach(async (guild: Guild) => {
     const cotwChannel = await findOrCreateCotwChannel(guild);
     closeVote(client, guild, cotwChannel);
