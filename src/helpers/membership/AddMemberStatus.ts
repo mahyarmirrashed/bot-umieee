@@ -6,7 +6,7 @@ import Bot from '../../client/Client';
 import MembershipModel from '../../models/MembershipModel';
 import Membership from '../../types/MembershipType';
 
-const registerMember = async (
+const addMemberStatus = async (
   client: Bot,
   interaction: CommandInteraction,
   guildID: Snowflake,
@@ -72,4 +72,4 @@ const registerMember = async (
     });
 };
 
-export default registerMember;
+export default addMemberStatus;

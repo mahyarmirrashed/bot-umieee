@@ -8,7 +8,7 @@ import { CommandInteraction, Permissions, GuildMember } from 'discord.js';
 import Bot from '../client/Client';
 import generateToken from '../helpers/membership/GenerateToken';
 import modifyMember from '../helpers/membership/ModifyMember';
-import registerMember from '../helpers/membership/RegisterMember';
+import addMemberStatus from '../helpers/membership/AddMemberStatus';
 import validateMember from '../helpers/membership/ValidateMember';
 
 const MINIMUM_IEEE_ID = 10_000_000;
@@ -53,7 +53,7 @@ export const handle = (client: Bot, interaction: CommandInteraction): void => {
       .then(() => {
         // type guard for possibily null guild
         if (interaction.guild) {
-          registerMember(
+          addMemberStatus(
             client,
             interaction,
             interaction.guild.id,
