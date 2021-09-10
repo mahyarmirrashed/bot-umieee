@@ -28,7 +28,7 @@ export const handler: Handler<unknown> = async (client: Bot): Promise<void> => {
       // fetch all upcoming events
       'https://events.vtools.ieee.org/feeds/v2/c/R70031?span=now~&sort=start_time',
     )
-    .then((res: AxiosResponse) => {
+    .then(async (res: AxiosResponse) => {
       // extract advertisements from JSON response
       const {
         data: { data: advertisements },
@@ -65,7 +65,8 @@ export const handler: Handler<unknown> = async (client: Bot): Promise<void> => {
 
       // if advertisements exist, post on all guilds
       if (advertisements.length > 0) {
-        client.guilds.cache.forEach(async (guild: Guild) =>
+        await client.guilds.fetch();
+        client.guilds.cache.each(async (guild: Guild) =>
           (await findOrCreateEventsChannel(guild))
             .send({ embeds })
             .then((announcement: Message) => {
