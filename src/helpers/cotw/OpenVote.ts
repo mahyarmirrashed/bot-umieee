@@ -9,7 +9,11 @@ import { Nomination } from '../../types/NominationType';
 
 const JAPANESE_FOOD_IDX = 70;
 
-const addVote = (client: Bot, guild: Guild, cotwChannel: TextChannel): void => {
+const openVote = (
+  client: Bot,
+  guild: Guild,
+  cotwChannel: TextChannel,
+): void => {
   // stringified date for previous, previous Monday
   const week = moment().day(-6).toISOString(true).split('T')[0];
 
@@ -87,4 +91,4 @@ const addVote = (client: Bot, guild: Guild, cotwChannel: TextChannel): void => {
     });
 };
 
-export default addVote;
+export default openVote;

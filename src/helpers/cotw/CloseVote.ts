@@ -17,7 +17,7 @@ import { Nomination } from '../../types/NominationType';
 
 const JAPANESE_FOOD_IDX = 70;
 
-const removeVote = (
+const closeVote = (
   client: Bot,
   guild: Guild,
   cotwChannel: TextChannel,
@@ -124,4 +124,4 @@ const removeVote = (
     });
 };
 
-export default removeVote;
+export default closeVote;
