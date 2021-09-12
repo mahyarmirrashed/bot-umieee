@@ -10,7 +10,6 @@ if (
     process.env.CLIENT_ID,
     process.env.DATABASE_URI,
     process.env.DISCORD_TOKEN,
-    process.env.GUILD_ID,
     process.env.MEMBERSHIP_VALIDATOR_CLIENT_ID,
     process.env.MEMBERSHIP_VALIDATOR_CLIENT_SECRET,
   ].every((envVar: string | undefined) => envVar)
