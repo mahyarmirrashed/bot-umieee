@@ -2,20 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [2.3.0](https://github.com/mahyarmirrashed/bot-umieee/compare/v2.2.4...v2.3.0) (2021-09-10)
-
-
-### Features
-
-* add feature to prune old members ([b58d79d](https://github.com/mahyarmirrashed/bot-umieee/commit/b58d79dcb991fa140c23173ce20ff3edd6747fa3))
-* **inactives:** potentially remove inactive user from database ([23eebe3](https://github.com/mahyarmirrashed/bot-umieee/commit/23eebe328fe1b904ba27c3e5e815ea1e9e1ca9a0))
+### [2.3.1](https://github.com/mahyarmirrashed/bot-umieee/compare/v2.3.0...v2.3.1) (2021-09-12)
 
 
 ### Bug Fixes
 
-* **cache:** fetch and fill cache first ([f8e923e](https://github.com/mahyarmirrashed/bot-umieee/commit/f8e923e6b42116f19d6819b49c24ffdb8dc4fc91))
-* **index:** add check for environment variables ([bdbf3dc](https://github.com/mahyarmirrashed/bot-umieee/commit/bdbf3dc3c11b30a0bc1caf7d1fcd19f25427f219))
-* **modifymember:** ensure member is inside guild ([6109dd6](https://github.com/mahyarmirrashed/bot-umieee/commit/6109dd6f1c63db18f7bf0c34c2c6d989d63e9207))
+* **index:** remove uncessary environment variable check ([28868bc](https://github.com/mahyarmirrashed/bot-umieee/commit/28868bce9e2e2f83a40527d5bea002136938b55f))
+
+## [2.3.0](https://github.com/mahyarmirrashed/bot-umieee/compare/v2.2.4...v2.3.0) (2021-09-10)
+
+### Features
+
+- add feature to prune old members ([b58d79d](https://github.com/mahyarmirrashed/bot-umieee/commit/b58d79dcb991fa140c23173ce20ff3edd6747fa3))
+- **inactives:** potentially remove inactive user from database ([23eebe3](https://github.com/mahyarmirrashed/bot-umieee/commit/23eebe328fe1b904ba27c3e5e815ea1e9e1ca9a0))
+
+### Bug Fixes
+
+- **cache:** fetch and fill cache first ([f8e923e](https://github.com/mahyarmirrashed/bot-umieee/commit/f8e923e6b42116f19d6819b49c24ffdb8dc4fc91))
+- **index:** add check for environment variables ([bdbf3dc](https://github.com/mahyarmirrashed/bot-umieee/commit/bdbf3dc3c11b30a0bc1caf7d1fcd19f25427f219))
+- **modifymember:** ensure member is inside guild ([6109dd6](https://github.com/mahyarmirrashed/bot-umieee/commit/6109dd6f1c63db18f7bf0c34c2c6d989d63e9207))
 
 ### [2.2.4](https://github.com/mahyarmirrashed/bot-umieee/compare/v2.2.3...v2.2.4) (2021-09-08)
 
