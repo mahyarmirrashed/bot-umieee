@@ -71,9 +71,11 @@ export default class Bot extends Client {
           import(eventPath).then((event: Event) => {
             if (event.cronJobFrequency) {
               // cron job event
-              new CronJob(event.cronJobFrequency, () =>
-                event.handler(this),
-              ).start();
+              new CronJob({
+                cronTime: event.cronJobFrequency,
+                onTick: () => event.handler(this),
+                timeZone: 'America/Winnipeg',
+              }).start();
             } else {
               // discord event
               this.logger.info(`Registering event ${cyan(event.name)}...`);
