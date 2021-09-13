@@ -5,7 +5,7 @@ import closeVote from '../../helpers/cotw/CloseVote';
 import findOrCreateCotwChannel from '../../helpers/guild/FindOrCreateCotwChannel';
 import Handler from '../../interfaces/HandlerStorage';
 
-export const cronJobFrequency = '0 0 * * MON';
+export const cronJobFrequency = '30 8 * * MON';
 
 export const handler: Handler<unknown> = async (client: Bot): Promise<void> => {
   // initiate close and/or open vote on all guilds

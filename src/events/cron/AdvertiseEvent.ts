@@ -20,7 +20,7 @@ const MAPPINGS = Object.assign(Object.create(null), {
 });
 
 // cron job metadata
-export const cronJobFrequency = '0 0 * * MON';
+export const cronJobFrequency = '30 8 * * MON';
 
 export const handler: Handler<unknown> = async (client: Bot): Promise<void> => {
   axios
