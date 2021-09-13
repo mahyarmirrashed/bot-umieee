@@ -2,12 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [2.3.1](https://github.com/mahyarmirrashed/bot-umieee/compare/v2.3.0...v2.3.1) (2021-09-12)
+### [2.3.2](https://github.com/mahyarmirrashed/bot-umieee/compare/v2.3.1...v2.3.2) (2021-09-13)
 
 
 ### Bug Fixes
 
-* **index:** remove uncessary environment variable check ([28868bc](https://github.com/mahyarmirrashed/bot-umieee/commit/28868bce9e2e2f83a40527d5bea002136938b55f))
+* **cron:** add timezone offset to cron jobs ([6b8d1a5](https://github.com/mahyarmirrashed/bot-umieee/commit/6b8d1a5b0bfb65ed4dc2b5e255bbac9c1ccfb5c0))
+
+### [2.3.1](https://github.com/mahyarmirrashed/bot-umieee/compare/v2.3.0...v2.3.1) (2021-09-12)
+
+### Bug Fixes
+
+- **index:** remove uncessary environment variable check ([28868bc](https://github.com/mahyarmirrashed/bot-umieee/commit/28868bce9e2e2f83a40527d5bea002136938b55f))
 
 ## [2.3.0](https://github.com/mahyarmirrashed/bot-umieee/compare/v2.2.4...v2.3.0) (2021-09-10)
 
