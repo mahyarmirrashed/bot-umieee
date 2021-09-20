@@ -1,0 +1,13 @@
+---
+version: '2.1'
+services:
+  umieee:
+    image: mahyarmirrashed/bot-umieee
+    container_name: umieee
+    environment:
+      - CLIENT_ID=INSERT_CLIENT_ID_HERE
+      - DATABASE_URI=INSERT_MONGO_DB_URI_HERE
+      - DISCORD_TOKEN=INSERT_DISCORD_TOKEN_HERE
+      - MEMBERSHIP_VALIDATOR_CLIENT_ID=INSERT_IEEE_MEMBERSHIP_VALIDATOR_CLIENT_ID_HERE
+      - MEMBERSHIP_VALIDATOR_CLIENT_SECRET=INSERT_IEEE_MEMBERSHIP_VALIDATOR_CLIENT_SECRET_HERE
+    restart: unless-stopped
