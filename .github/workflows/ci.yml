@@ -1,10 +1,8 @@
 name: ci
 
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+  release:
+    types: [published]
 
 jobs:
   deploy:
@@ -46,5 +44,5 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            docker-compose down
-            docker-compose up -d
+            docker-compose -f umieee.yml down
+            docker-compose -f umieee.yml up -d
